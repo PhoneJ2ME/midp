@@ -4,8 +4,8 @@ src/ams/ams_base/reference/classes/com/sun/midp/main/doc-files/runtime.gif svn_m
 src/ams/appmanager_ui/reference/classes/com/sun/midp/appmanager/doc-files/appman.gif svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/armsd/splash_screen_176x210.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/armsd/splash_screen_210x176.png svn_mime_002dtype=application%2Foctet-stream
-src/ams/appmanager_ui_resources/javacall/splash_screen_176x210.png svn_mime_002dtype=application%2Foctet-stream
-src/ams/appmanager_ui_resources/javacall/splash_screen_210x176.png svn_mime_002dtype=application%2Foctet-stream
+src/ams/appmanager_ui_resources/javacall/splash_screen_240x320.png svn_mime_002dtype=application%2Foctet-stream
+src/ams/appmanager_ui_resources/javacall/splash_screen_320x240.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_fb/splash_screen_176x210.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_fb/splash_screen_210x176.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_qte/chameleon/splash_screen_176x210.png svn_mime_002dtype=application%2Foctet-stream
