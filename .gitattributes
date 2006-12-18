@@ -29,6 +29,7 @@ src/ams/appmanager_ui_resources/stubs/splash_screen_176x210.png svn_mime_002dtyp
 src/ams/appmanager_ui_resources/stubs/splash_screen_210x176.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/win32/splash_screen_240x320.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/win32/splash_screen_320x240.png svn_mime_002dtype=application%2Foctet-stream
+src/ams/appmanager_ui_resources/wince/splash_screen.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/installer/reference/classes/com/sun/midp/installer/doc-files/at-seq.gif svn_mime_002dtype=application%2Foctet-stream
 src/ams/installer/reference/classes/com/sun/midp/installer/doc-files/autotester.gif svn_mime_002dtype=application%2Foctet-stream
 src/ams/installer/reference/classes/com/sun/midp/installer/doc-files/discoveryapp.gif svn_mime_002dtype=application%2Foctet-stream
