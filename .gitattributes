@@ -221,7 +221,7 @@ src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/viewWindow.gif svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/win32_application/reference/native/res/phone.bmp svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/win32_application/reference/native/res/phone_hilight.bmp svn_mime_002dtype=application%2Foctet-stream
-src/protocol/gcf/reference/classes/com/sun/midp/io/doc-files/MIDPConnectionBaseAdapter.gif svn_mime_002dtype=application%2Foctet-stream
+src/protocol/gcf/reference/classes/com/sun/midp/io/doc-files/ConnectionBaseAdapter.gif svn_mime_002dtype=application%2Foctet-stream
 src/protocol/https/reference/classes/com/sun/midp/io/j2me/https/doc-files/https.gif svn_mime_002dtype=application%2Foctet-stream
 src/protocol/ssl/classes/javax/microedition/io/doc-files/MIDP_Networking-4.gif svn_mime_002dtype=application%2Foctet-stream
 src/security/internal_api_protection/reference/classes/com/sun/midp/security/doc-files/security_1.gif svn_mime_002dtype=application%2Foctet-stream
