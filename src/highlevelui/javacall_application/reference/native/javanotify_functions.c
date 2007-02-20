@@ -425,8 +425,7 @@ void javanotify_resume(void) {
 
 /**
  * The platfrom should invoke this function in platform context 
- * to switch the current foreground midlet to background midlet.
- * Task Manger may be foreground after this call.
+ * to bring application switcher to foreground.
  */
 void javanotify_switchforeground(void) {
 #if ENABLE_MULTIPLE_ISOLATES
@@ -435,6 +434,22 @@ void javanotify_switchforeground(void) {
     REPORT_INFO(LC_CORE, "javanotify_switchforeground() >>\n");
 
     e.eventType = MIDP_JC_EVENT_SWITCH_FOREGROUND;
+
+    midp_jc_event_send(&e);
+#endif /* ENABLE_MULTIPLE_ISOLATES */
+}
+
+/**
+ * The platfrom should invoke this function in platform context 
+ * to switch the current foreground midlet to Task Manager.
+ */
+void javanotify_selectapp(void) {
+#if ENABLE_MULTIPLE_ISOLATES
+    midp_jc_event_union e;
+
+    REPORT_INFO(LC_CORE, "javanotify_selectapp() >>\n");
+
+    e.eventType = MIDP_JC_EVENT_SELECT_APP;
 
     midp_jc_event_send(&e);
 #endif /* ENABLE_MULTIPLE_ISOLATES */
