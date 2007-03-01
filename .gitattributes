@@ -219,6 +219,7 @@ src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/transcenter.gif svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/transforms.gif svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/game/doc-files/viewWindow.gif svn_mime_002dtype=application%2Foctet-stream
+src/highlevelui/lfpport/linux_qte/resource/calendar.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/win32_application/reference/native/res/phone.bmp svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/win32_application/reference/native/res/phone_hilight.bmp svn_mime_002dtype=application%2Foctet-stream
 src/protocol/gcf/reference/classes/com/sun/midp/io/doc-files/ConnectionBaseAdapter.gif svn_mime_002dtype=application%2Foctet-stream
