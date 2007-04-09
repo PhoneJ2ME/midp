@@ -23,7 +23,6 @@ src/ams/appmanager_ui_resources/linux_qte/platform/alert.image_icon_info.png svn
 src/ams/appmanager_ui_resources/linux_qte/platform/alert.image_icon_warn.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_qte/platform/splash_screen_166x176.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_qte/platform/splash_screen_176x166.png svn_mime_002dtype=application%2Foctet-stream
-src/ams/appmanager_ui_resources/linux_qte/platform/trustedmidlet_icon.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_disabled.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_fg_requested.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_hilight_bg.png svn_mime_002dtype=application%2Foctet-stream
@@ -31,6 +30,7 @@ src/ams/appmanager_ui_resources/share/_ch_single.png svn_mime_002dtype=applicati
 src/ams/appmanager_ui_resources/share/_ch_suite.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_single8.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_suite8.png svn_mime_002dtype=application%2Foctet-stream
+src/ams/appmanager_ui_resources/share/trustedmidlet_icon.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/stubs/splash_screen_176x210.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/stubs/splash_screen_210x176.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/win32/splash_screen_240x320.png svn_mime_002dtype=application%2Foctet-stream
@@ -218,7 +218,6 @@ src/highlevelui/lcdlf/lfjava/resource/skin/updatebar.image_frame3.png svn_mime_0
 src/highlevelui/lcdlf/lfjava/resource/skin/updatebar.image_frame4.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/updatebar.image_frame5.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/updatebar.image_frame6.png svn_mime_002dtype=application%2Foctet-stream
-src/highlevelui/lcdlf/lfjava/resource/trustedmidlet_icon.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource_optional/calendar.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource_optional/indicator_bar.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource_optional/indicator_bar_small_240.png svn_mime_002dtype=application%2Foctet-stream
@@ -414,7 +413,6 @@ src/highlevelui/lcdlf/lfjava/resource_optional/skin/updatebar.image_frame4.png s
 src/highlevelui/lcdlf/lfjava/resource_optional/skin/updatebar.image_frame5.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource_optional/skin/updatebar.image_frame6.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource_optional/skin/updatebar.image_frame7.png svn_mime_002dtype=application%2Foctet-stream
-src/highlevelui/lcdlf/lfjava/resource_optional/trustedmidlet_icon.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdui/reference/classes/com/sun/midp/lcdui/package.html svn_mime_002dtype=text%2Fhtml
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/doc-files/command1.gif svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdui/reference/classes/javax/microedition/lcdui/doc-files/command2.gif svn_mime_002dtype=application%2Foctet-stream
