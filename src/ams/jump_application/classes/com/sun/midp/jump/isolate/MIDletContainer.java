@@ -97,11 +97,6 @@ public class MIDletContainer extends JUMPAppContainer implements
     /** Reference to the suite storage. */
     private MIDletSuiteStorage suiteStorage;
 
-    /**
-     * Provides interface to lcdui environment.
-     */
-    protected LCDUIEnvironment lcduiEnvironment;
-
     /** Starts and controls MIDlets through the lifecycle states. */
     private MIDletStateHandler midletStateHandler;
 
@@ -123,8 +118,6 @@ public class MIDletContainer extends JUMPAppContainer implements
     /** Core initialization of a MIDP environment. */
     public MIDletContainer(JUMPAppContainerContext context) {
 
-        EventQueue eventQueue;
-
         CDCInit.init(context.getConfigProperty("sun.midp.home.path"));
 
         appContext = context;
@@ -134,14 +127,6 @@ public class MIDletContainer extends JUMPAppContainer implements
 
         // Init security tokens for core subsystems
         SecurityInitializer.initSystem();
-
-        eventQueue = EventQueue.getEventQueue(
-            internalSecurityToken);
-
-        lcduiEnvironment = new LCDUIEnvironmentForCDC(internalSecurityToken, 
-                                                      eventQueue, 0, this);
-
-        displayContainer = lcduiEnvironment.getDisplayContainer();
 
         suiteStorage =
             MIDletSuiteStorage.getMIDletSuiteStorage(internalSecurityToken);
@@ -190,6 +175,15 @@ public class MIDletContainer extends JUMPAppContainer implements
             if (!midletSuite.isEnabled()) {
                 throw new IllegalStateException("Suite is disabled");
             }
+
+            EventQueue eventQueue = 
+                EventQueue.getEventQueue(internalSecurityToken);
+
+            LCDUIEnvironmentForCDC lcduiEnvironment = 
+                new LCDUIEnvironmentForCDC(internalSecurityToken, 
+                                           eventQueue, 0, this);
+
+            displayContainer = lcduiEnvironment.getDisplayContainer();
 
             lcduiEnvironment.setTrustedState(midletSuite.isTrusted());
 
