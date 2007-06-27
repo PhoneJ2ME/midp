@@ -26,7 +26,6 @@ package com.sun.midp.jump.push.executive;
 
 import com.sun.midp.jump.push.executive.ota.InstallerInterface;
 import com.sun.midp.push.gcf.PermissionCallback;
-import com.sun.midp.push.gcf.ReservationDescriptor;
 import com.sun.midp.push.gcf.ReservationDescriptorFactory;
 import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
@@ -55,7 +54,7 @@ final class InstallerInterfaceImpl implements InstallerInterface {
     /** {@inheritDoc} */
     public void installConnections(
             final int midletSuiteId,
-            final JUMPConnectionInfo [] connections)
+            final ConnectionInfo [] connections)
                 throws  ConnectionNotFoundException, IOException,
                         SecurityException {
         final PermissionCallback permissionCallback = new PermissionCallback() {
@@ -70,7 +69,7 @@ final class InstallerInterfaceImpl implements InstallerInterface {
 
         checkPushPermission(midletSuiteId);
         for (int i = 0; i < connections.length; i++) {
-            final JUMPConnectionInfo ci = connections[i];
+            final ConnectionInfo ci = connections[i];
             try {
                 pushController.registerConnection(
                         midletSuiteId, ci.midlet,
@@ -108,6 +107,9 @@ final class InstallerInterfaceImpl implements InstallerInterface {
      * Checks if the suite is allowed to install static push reservations.
      *
      * @param midletSuiteId <code>MIDlet</code> suite id
+     * @param permissionName string representation of permission
+     * @param resource name of resource
+     * @param extraValue additional value
      */
     private void checkPermission(
             final int midletSuiteId,

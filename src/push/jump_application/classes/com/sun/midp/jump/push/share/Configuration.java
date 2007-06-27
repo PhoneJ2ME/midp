@@ -40,7 +40,7 @@ import javax.microedition.io.ConnectionNotFoundException;
  */
 public final class Configuration {
     /** Hidden constructor. */
-    private Configuration() {}
+    private Configuration() { }
 
     /**
      * Gets a reference to reservation descriptor factory to use.
@@ -63,6 +63,6 @@ public final class Configuration {
     }
 
     /** MIDP container interface IXC resource URI. */
-    final static public String MIDP_CONTAINER_INTERFACE_IXC_URI =
+    public static final String MIDP_CONTAINER_INTERFACE_IXC_URI =
             MIDPContainerInterface.class.getName();
 }

@@ -228,17 +228,6 @@ final class PushController {
     }
 
     /**
-     * Logs error message.
-     *
-     * @param message message to log
-     */
-    private static void logError(final String message) {
-        // TBD: proper logging
-        System.err.println("[error, " + PushController.class.getName()
-            + "]: " + message);
-    }
-
-    /**
      * Disposes the controller.
      *
      * <p>

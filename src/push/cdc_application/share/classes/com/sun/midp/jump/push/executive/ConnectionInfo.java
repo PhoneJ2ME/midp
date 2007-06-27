@@ -29,11 +29,8 @@ import java.io.Serializable;
  * PushRegistry connection info.
  *
  * <p>Simple, structure like class</p>
- *
- * <p><strong>TBD</strong>: at see
- *  <code>javax.microedition.io.PushRegistry#registerConnection</code></p>
  */
-public final class JUMPConnectionInfo implements Serializable {
+public final class ConnectionInfo implements Serializable {
     /**
      * Generic connection <i>protocol</i>, <i>host</i> and <i>port
      * number</i> (optional parameters may be included separated with
@@ -73,7 +70,7 @@ public final class JUMPConnectionInfo implements Serializable {
      * TBD: unittest <code>null</code> params
      * </p>
      */
-    public JUMPConnectionInfo(
+    public ConnectionInfo(
             final String connection,
             final String midlet,
             final String filter) {
@@ -101,11 +98,11 @@ public final class JUMPConnectionInfo implements Serializable {
      * @return <code>true</code> if equal, <code>fasle</code> otherwise
      */
     public boolean equals(final Object obj) {
-        if (!(obj instanceof JUMPConnectionInfo)) {
+        if (!(obj instanceof ConnectionInfo)) {
             return false;
         }
 
-        JUMPConnectionInfo rhs = (JUMPConnectionInfo) obj;
+        final ConnectionInfo rhs = (ConnectionInfo) obj;
         return (this == rhs)
             || (connection.equals(rhs.connection)
                 && midlet.equals(rhs.midlet)

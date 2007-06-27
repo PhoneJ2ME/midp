@@ -38,6 +38,7 @@ import com.sun.jump.module.serviceregistry.JUMPServiceRegistryModuleFactory;
 import com.sun.midp.jump.installer.MIDLETInstallerImpl;
 import com.sun.midp.jump.push.executive.ota.InstallerInterface;
 import com.sun.midp.jump.push.executive.persistence.Store;
+import com.sun.midp.jump.push.executive.persistence.JUMPStoreImpl;
 import com.sun.midp.jump.push.executive.persistence.StoreOperationManager;
 import com.sun.midp.jump.push.share.Configuration;
 import com.sun.midp.push.gcf.ReservationDescriptorFactory;
@@ -82,7 +83,7 @@ final class PushModule implements JUMPPushModule {
 
         PushSystem(final StoreOperationManager storeManager)
                 throws IOException, RemoteException, AlreadyBoundException {
-            final Store store = new Store(storeManager);
+            final Store store = new JUMPStoreImpl(storeManager);
 
             final ReservationDescriptorFactory reservationDescriptorFactory =
                     Configuration.getReservationDescriptorFactory();

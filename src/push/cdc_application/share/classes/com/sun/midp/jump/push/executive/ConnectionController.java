@@ -133,8 +133,8 @@ final class ConnectionController {
         final String filter = reservationDescriptor.getFilter();
 
         try {
-            // TODO: rethink if we need filter in JUMPConnectionInfo
-            final JUMPConnectionInfo connectionInfo = new JUMPConnectionInfo(
+            // TODO: rethink if we need filter in ConnectionInfo
+            final ConnectionInfo connectionInfo = new ConnectionInfo(
                     connectionName, midlet, filter);
             store.addConnection(midletSuiteID, connectionInfo);
         } catch (IOException ioex) {
@@ -199,7 +199,7 @@ final class ConnectionController {
      */
     private void removeRegistration(final ReservationHandler reservationHandler)
             throws IOException {
-        final JUMPConnectionInfo info = new JUMPConnectionInfo(
+        final ConnectionInfo info = new ConnectionInfo(
                 reservationHandler.getConnectionName(),
                 reservationHandler.getMidlet(),
                 reservationHandler.getFilter());
@@ -366,9 +366,9 @@ final class ConnectionController {
         store.listConnections(new Store.ConnectionsConsumer() {
             public void consume(
                     final int suiteId,
-                    final JUMPConnectionInfo [] connections) {
+                    final ConnectionInfo [] connections) {
                 for (int i = 0; i < connections.length; i++) {
-                    final JUMPConnectionInfo info = connections[i];
+                    final ConnectionInfo info = connections[i];
                     try {
                         registerConnection(suiteId, info.midlet,
                                 reservationDescriptorFactory.getDescriptor(

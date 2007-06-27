@@ -25,7 +25,7 @@ package com.sun.midp.jump.push.executive.persistence;
 
 import com.sun.jump.module.contentstore.JUMPNode;
 import com.sun.jump.module.contentstore.JUMPStoreHandle;
-import com.sun.midp.jump.push.executive.JUMPConnectionInfo;
+import com.sun.midp.jump.push.executive.ConnectionInfo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * Persistent store class for <code>PushRegistry</code> module.
+ * JUMP specific implementation of <code>Store</code> interface.
  *
  * <p>
  * IMPORTANT_NOTE:  The clients of this class should ensure that content store
@@ -42,21 +42,12 @@ import java.util.Vector;
  *  methods are invoked.  Otherwise we'll face deadlocks.
  * <p>
  *
- * <p><strong>NB</strong>: method <code>getConnections</code> guarantees
- * that <code>MIDlet suite</code> without connections won't be listed,
- * i.e. <code>MIDletSuiteConnections.connections</code>
- * array is not empty</p>
- *
- * <p><strong>NB</strong>: this class has no intellegence of connection
- * semantics, e.g. it doesn't handle connection conflicts.  It's a simplistic
- * database.</p>
- *
  * <p><strong>Implementation notice</strong>: as for now if <code>MIDlet
  * suite</code> removes all the connections, the file with suite connections
  * is not removed and the suite is filtered in {@line getConnections} method.
  * Another option might be to remove the file.</p>
  */
-public final class Store {
+public final class JUMPStoreImpl implements Store {
     /** PushRegistry root dir. */
     private static final String ROOT_DIR = "./push/";
 
@@ -73,13 +64,14 @@ public final class Store {
     private final AppSuiteDataStore alarmsStore;
 
     /**
-     * Constructs a Store and reads the data.
+     * Constructs a JUMPStoreImpl and reads the data.
      *
      * @param storeManager JUMP content store manager to use
      *
      * @throws IOException if IO fails
      */
-    public Store(final StoreOperationManager storeManager) throws IOException {
+    public JUMPStoreImpl(final StoreOperationManager storeManager)
+            throws IOException {
         if (storeManager == null) {
             throw new IllegalArgumentException("storeManager is null");
         }
@@ -132,63 +124,42 @@ public final class Store {
             return;
         }
         if (!(node instanceof JUMPNode.List)) {
-            logWarning("Node " + dir + " is a data node: trying to erase and recreate");
+            logWarning("Node " + dir
+                    + " is a data node: trying to erase and recreate");
             storeHandle.deleteNode(dir);
             storeHandle.createNode(dir);
             return;
         }
     }
 
+    /**
+     * Logs warning message.
+     *
+     * @param msg warning to log
+     */
     private static void logWarning(final String msg) {
         // TBD: use common logging
-        System.out.println("[warning] " + Store.class + ": " + msg);
+        System.out.println("[warning] " + JUMPStoreImpl.class + ": " + msg);
     }
 
-    /** Connections consumer. */
-    public static interface ConnectionsConsumer {
-        /**
-         * COnsumes app suite connections.
-         *
-         * @param suiteId app suite ID
-         * @param connections app suite connections
-         */
-        void consume(int suiteId, JUMPConnectionInfo [] connections);
-    }
-
-    /**
-     * Lists all registered connections.
-     *
-     * @param connectionsLister connection lister
-     */
+    /** {@inheritDoc} */
     public synchronized void listConnections(
             final ConnectionsConsumer connectionsLister) {
         connectionsStore.listData(new AppSuiteDataStore.DataConsumer() {
            public void consume(final int suiteId, final Object suiteData) {
                final Vector v = (Vector) suiteData;
-               final JUMPConnectionInfo [] cns
-                       = new JUMPConnectionInfo[v.size()];
+               final ConnectionInfo [] cns
+                       = new ConnectionInfo[v.size()];
                v.toArray(cns);
                connectionsLister.consume(suiteId, cns);
            }
         });
     }
 
-    /**
-     * Adds new registered connection.
-     *
-     * <p><strong>Precondition</strong>: <code>connection</code> MUST not be
-     * already registered (the method doesn't check it)</p>
-     *
-     * @param midletSuiteID ID of <code>MIDlet suite</code> to register
-     *   connection for
-     *
-     * @param connection Connection to register
-     *
-     * @throws IOException if the content store failed to perform operation
-     */
+    /** {@inheritDoc} */
     public synchronized void addConnection(
             final int midletSuiteID,
-            final JUMPConnectionInfo connection)
+            final ConnectionInfo connection)
             throws IOException {
         Vector cns = (Vector) connectionsStore.getSuiteData(midletSuiteID);
         if (cns == null) {
@@ -198,47 +169,19 @@ public final class Store {
         connectionsStore.updateSuiteData(midletSuiteID, cns);
     }
 
-    /**
-     * Adds connections for the suite being installed.
-     *
-     * <p><strong>Preconditin</strong>: <code>connection</code> MUST not be
-     * already registered (the method doesn't check it)</p>
-     *
-     * @param midletSuiteID ID of <code>MIDlet suite</code> to register
-     *   connection for
-     *
-     * @param connections Connections to register
-     *
-     * @throws IOException if the content store failed to perform operation
-     */
+    /** {@inheritDoc} */
     public synchronized void addConnections(
             final int midletSuiteID,
-            final JUMPConnectionInfo[] connections)
+            final ConnectionInfo[] connections)
             throws IOException {
         final Vector cns = new Vector(Arrays.asList(connections));
         connectionsStore.updateSuiteData(midletSuiteID, cns);
     }
 
-    /**
-     * Removes registered connection.
-     *
-     * <p><strong>Preconditin</strong>: <code>connection</code> MUST have been
-     * already registered (the method doesn't check it)</p>
-     *
-     * <p><strong>NB</strong>: <code>throws IOException</code> was intentionally
-     * removed from the signature: it's resonsibility of <code>Store</code>
-     * to ensure removal of all connections.</p>
-     *
-     * @param midletSuiteID ID of <code>MIDlet suite</code> to remove
-     *   connection for
-     *
-     * @param connection Connection to remove
-     *
-     * @throws IOException if the content store failed to perform operation
-     */
+    /** {@inheritDoc} */
     public synchronized void removeConnection(
             final int midletSuiteID,
-            final JUMPConnectionInfo connection)
+            final ConnectionInfo connection)
             throws IOException {
         Vector cns = (Vector) connectionsStore.getSuiteData(midletSuiteID);
         // assert cns != null : "cannot be null";
@@ -251,43 +194,13 @@ public final class Store {
     }
 
 
-    /**
-     * Removes all registered connections.
-     *
-     * <p><strong>Preconditin</strong>: <code>connection</code> MUST have been
-     * already registered (the method doesn't check it)</p>
-     *
-     * <p><strong>NB</strong>: <code>throws IOException</code> was intentionally
-     * removed from the signature: it's resonsibility of <code>Store</code>
-     * to ensure removal of all connections.</p>
-     *
-     * @param midletSuiteID ID of <code>MIDlet suite</code> to remove
-     *   connections for
-     *
-     * @throws IOException if the content store failed
-     */
+    /** {@inheritDoc} */
     public synchronized void removeConnections(final int midletSuiteID)
             throws IOException {
         connectionsStore.removeSuiteData(midletSuiteID);
     }
 
-    /** Alarms lister. */
-    public static interface AlarmsConsumer {
-        /**
-         * Lists app suite alarms.
-         *
-         * @param suiteId app suite ID
-         * @param alarms alarms mappings from <code>MIDlet</code> class name
-         *  to the scheduled time
-         */
-        void consume(int suiteId, Map alarms);
-    }
-
-    /**
-     * Lists all alarms.
-     *
-     * @param alarmsLister connection lister
-     */
+    /** {@inheritDoc} */
     public synchronized void listAlarms(final AlarmsConsumer alarmsLister) {
         alarmsStore.listData(new AppSuiteDataStore.DataConsumer() {
            public void consume(final int suiteId, final Object suiteData) {
@@ -296,15 +209,7 @@ public final class Store {
         });
     }
 
-    /**
-     * Adds an alarm.
-     *
-     * @param midletSuiteID <code>MIDlet suite</code> to add alarm for
-     * @param midlet <code>MIDlet</code> class name
-     * @param time alarm time
-     *
-     * @throws IOException if the content store failed
-     */
+    /** {@inheritDoc} */
     public synchronized void addAlarm(
             final int midletSuiteID,
             final String midlet,
@@ -318,14 +223,7 @@ public final class Store {
         alarmsStore.updateSuiteData(midletSuiteID, as);
     }
 
-    /**
-     * Removes an alarm.
-     *
-     * @param midletSuiteID <code>MIDlet suite</code> to remove alarm for
-     * @param midlet <code>MIDlet</code> class name
-     *
-     * @throws IOException if the content store failed
-     */
+    /** {@inheritDoc} */
     public synchronized void removeAlarm(
             final int midletSuiteID,
             final String midlet)
@@ -379,7 +277,7 @@ public final class Store {
             final StringBuffer sb = new StringBuffer();
 
             for (Iterator it = connections.iterator(); it.hasNext();) {
-                JUMPConnectionInfo connection = (JUMPConnectionInfo) it.next();
+                ConnectionInfo connection = (ConnectionInfo) it.next();
                 sb.append(connection.connection);   sb.append(SEPARATOR);
                 sb.append(connection.midlet);       sb.append(SEPARATOR);
                 sb.append(connection.filter);       sb.append(SEPARATOR);
@@ -409,7 +307,7 @@ public final class Store {
 
             Vector v = new Vector();
             for (int i = 0; i < ss.length; i += N_STRINGS_PER_RECORD) {
-                v.add(new JUMPConnectionInfo(ss[i], ss[i + 1], ss[i + 2]));
+                v.add(new ConnectionInfo(ss[i], ss[i + 1], ss[i + 2]));
             }
             return v;
         }
@@ -481,7 +379,7 @@ public final class Store {
         public Object stringToData(final String s) {
             final HashMap data = new HashMap();
             int pos = 0;
-            for (;;) {
+            while (true) {
                 final int p = s.indexOf('\n', pos);
                 if (p == -1) {
                     // assert pos == s.length() - 1 : "unprocessed chars!";

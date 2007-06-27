@@ -24,7 +24,7 @@
 
 package com.sun.midp.jump.push.executive.ota;
 
-import com.sun.midp.jump.push.executive.JUMPConnectionInfo;
+import com.sun.midp.jump.push.executive.ConnectionInfo;
 import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
 
@@ -59,11 +59,12 @@ public interface InstallerInterface {
      *  connections for
      * @param connections Connections to install
      *
-     * @throws ConnectionNotFoundException
-     * @throws SecurityException
+     * @throws ConnectionNotFoundException as mandated by the spec
+     * @throws IOException as mandated by the spec
+     * @throws SecurityException as mandated by the spec
      */
     void installConnections(int midletSuiteId,
-            JUMPConnectionInfo[] connections)
+            ConnectionInfo[] connections)
                 throws  ConnectionNotFoundException, IOException,
                         SecurityException;
 

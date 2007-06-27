@@ -36,52 +36,50 @@
 
 # Adds to global SUBSYSTEMS list
 #
-JUMP_PUSH_LIB = jump_application
-LIB_SET += $(JUMP_PUSH_LIB)
+CDC_PUSH_LIB = cdc_application
+LIB_SET += $(CDC_PUSH_LIB)
 
 # Common settings
 #
 
-JUMP_PUSH_CLASSES_DIR = $(SUBSYSTEM_PUSH_DIR)/$(JUMP_PUSH_LIB)/classes
+CDC_SHARE_PUSH_CLASSES_DIR = $(SUBSYSTEM_PUSH_DIR)/$(CDC_PUSH_LIB)/share/classes
 
-JUMP_PUSH_PACKAGE = com.sun.midp.jump.push
+# TBD: rename to com.sun.midp.cdc.push
+CDC_SHARE_PUSH_PACKAGE = com.sun.midp.jump.push
 
-JUMP_PUSH_PACKAGE_DIR = $(JUMP_PUSH_CLASSES_DIR)/$(shell echo $(JUMP_PUSH_PACKAGE) | tr '.' '/')
+CDC_SHARE_PUSH_PACKAGE_DIR = $(CDC_SHARE_PUSH_CLASSES_DIR)/$(shell echo $(CDC_SHARE_PUSH_PACKAGE) | tr '.' '/')
 
 # Classes and files
 #
 
 # No native files so far
-SUBSYSTEM_JUMP_PUSH_NATIVE_FILES =
-SUBSYSTEM_JUMP_PUSH_EXTRA_INCLUDES =
+SUBSYSTEM_CDC_SHARE_PUSH_NATIVE_FILES =
+SUBSYSTEM_CDC_SHARE_PUSH_EXTRA_INCLUDES =
 
 # Javadoc settings
 #
-LIB_JAVA_PUSH_SOURCEPATH = $(JUMP_PUSH_CLASSES_DIR)
+LIB_JAVA_PUSH_SOURCEPATH = $(CDC_SHARE_PUSH_CLASSES_DIR)
 
-SUBSYSTEM_JUMP_PUSH_PACKAGES = \
-    $(JUMP_PUSH_PACKAGE).executive \
-    $(JUMP_PUSH_PACKAGE).executive.ota \
-    $(JUMP_PUSH_PACKAGE).executive.persistence \
-    $(JUMP_PUSH_PACKAGE).executive.remote \
-    $(JUMP_PUSH_PACKAGE).share
+SUBSYSTEM_CDC_SHARE_PUSH_PACKAGES = \
+    $(CDC_SHARE_PUSH_PACKAGE).executive \
+    $(CDC_SHARE_PUSH_PACKAGE).executive.ota \
+    $(CDC_SHARE_PUSH_PACKAGE).executive.persistence
 
 MIDP_JAVADOC_ALL += \
-    -group "JUMP Push implementation" \
+    -group "Shared CDC Push implementation" \
     $(shell echo $(SUBSYSTEM_JUMP_PUSH_PACKAGES) | tr ' ' $(PATHSEP))
 
-SUBSYSTEM_JUMP_PUSH_JAVA_FILES = \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/JUMPPushModule.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/JUMPPushModuleFactory.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/MIDPContainerInterfaceImpl.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/PushRegistryModuleFactoryImpl.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/persistence/AppSuiteDataStore.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/persistence/JUMPStoreImpl.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/persistence/StoreOperationManager.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/executive/remote/MIDPContainerInterface.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/share/Configuration.java \
-    $(JUMP_PUSH_PACKAGE_DIR)/share/JUMPReservationDescriptor.java
+SUBSYSTEM_CDC_SHARE_PUSH_JAVA_FILES = \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/AlarmController.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/ConnectionController.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/ConnectionInfo.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/InstallerInterfaceImpl.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/LifecycleAdapter.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/MIDPApp.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/PushController.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/ota/InstallerInterface.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/persistence/Store.java \
 
 ifeq ($(USE_I3_TEST), true)
-    SUBSYSTEM_JUMP_PUSH_I3TEST_JAVA_FILES =
+    SUBSYSTEM_CDC_SHARE_PUSH_I3TEST_JAVA_FILES =
 endif

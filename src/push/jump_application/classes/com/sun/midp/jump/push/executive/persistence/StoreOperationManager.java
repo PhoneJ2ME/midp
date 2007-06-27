@@ -67,8 +67,6 @@ public final class StoreOperationManager {
          * @param accessExclusive controls exclusiveness of access
          *
          * @return store handle
-         *
-         * @throws IOException if IO fails
          */
         JUMPStoreHandle open(boolean accessExclusive);
 
