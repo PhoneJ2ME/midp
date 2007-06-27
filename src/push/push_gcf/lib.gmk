@@ -66,12 +66,20 @@ MIDP_JAVADOC_ALL += \
     -group "Push-GCF interfaces" \
     $(shell echo $(SUBSYSTEM_PUSH_GCF_PACKAGES) | tr ' ' $(PATHSEP))
 
+# TBD: rethink names/packages/packiging of the classes in impl subpackage
 SUBSYSTEM_PUSH_GCF_JAVA_FILES += \
     $(PUSH_GCF_API_PACKAGE_DIR)/ConnectionReservation.java \
     $(PUSH_GCF_API_PACKAGE_DIR)/DataAvailableListener.java \
     $(PUSH_GCF_API_PACKAGE_DIR)/PermissionCallback.java \
     $(PUSH_GCF_API_PACKAGE_DIR)/ReservationDescriptor.java \
-    $(PUSH_GCF_API_PACKAGE_DIR)/ReservationDescriptorFactory.java
+    $(PUSH_GCF_API_PACKAGE_DIR)/ReservationDescriptorFactory.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/ConnectionName.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/MapProtocolRegistry.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/ProtocolClassResolver.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/ProtocolFactory.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/ProtocolRegistry.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/RDFactory.java \
+    $(PUSH_GCF_API_PACKAGE_DIR)/impl/ClassLoadingProtocolRegistry.java
 
 ifeq ($(USE_I3_TEST), true)
     SUBSYSTEM_PUSH_GCF_I3TEST_JAVA_FILES =
