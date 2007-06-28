@@ -86,8 +86,8 @@ SUBSYSTEM_JUMP_PUSH_JAVA_FILES = \
 
 ifeq ($(USE_JUNIT_TEST), true)
     SUBSYSTEM_JUMP_PUSH_JUNIT_JAVA_FILES = \
-        $(JUMP_PUSH_TESTS_DIR)/com/jump/module/contentstore/InMemoryContentStore.java \
-        $(JUMP_PUSH_TESTS_DIR)/com/jump/module/contentstore/InMemoryStore.java
+        $(JUMP_PUSH_TESTS_DIR)/com/sun/jump/module/contentstore/InMemoryContentStore.java \
+        $(JUMP_PUSH_TESTS_DIR)/com/sun/jump/module/contentstore/InMemoryStore.java
 endif
 
 ifeq ($(USE_I3_TEST), true)
