@@ -122,7 +122,7 @@ endif
 
 ifeq ($(USE_JUNIT_TEST), true)
 $(MIDP_JUNIT_CLASSES_ZIP): $(MIDP_CLASSES_ZIP) $(JTWI_JUNIT_JAVA_FILES)
-ifneq ($(JTWI_JUNIT_JAVA_FILES),)
+ifneq ($(strip $(JTWI_JUNIT_JAVA_FILES)),)
 	@# TBD: better integration with the rest of the system, e.g. no check below + regenerate classes.zip when one of tests get rebuild
 	@if [ '!' -d $(JAVAC_OUT_DIR) ]; then \
 		mkdir -p $(JAVAC_OUT_DIR); \
