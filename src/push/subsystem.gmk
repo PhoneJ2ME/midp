@@ -82,7 +82,7 @@ ifeq ($(USE_NATIVE_PUSH), false)
     ifeq ($(TARGET_VM), cdc_vm)
         ifeq ($(CVM_INCLUDE_JUMP), true)
             include $(SUBSYSTEM_PUSH_DIR)/cdc_application/share/lib.gmk
-            include $(SUBSYSTEM_PUSH_DIR)/jump_application/lib.gmk
+            include $(SUBSYSTEM_PUSH_DIR)/cdc_application/jump/lib.gmk
         endif
     endif
 endif
