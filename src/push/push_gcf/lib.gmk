@@ -42,7 +42,9 @@ LIB_SET += $(PUSH_GCF_LIB)
 # Common settings
 #
 
-PUSH_GCF_CLASSES_DIR = $(SUBSYSTEM_PUSH_DIR)/$(PUSH_GCF_LIB)/classes
+PUSH_GCF_DIR = $(SUBSYSTEM_PUSH_DIR)/$(PUSH_GCF_LIB)
+PUSH_GCF_CLASSES_DIR = $(PUSH_GCF_DIR)/classes
+PUSH_GCF_TESTS_DIR = $(PUSH_GCF_DIR)/tests
 
 PUSH_GCF_API_PACKAGE = com.sun.midp.push.gcf
 
@@ -80,6 +82,14 @@ SUBSYSTEM_PUSH_GCF_JAVA_FILES += \
     $(PUSH_GCF_API_PACKAGE_DIR)/impl/ProtocolRegistry.java \
     $(PUSH_GCF_API_PACKAGE_DIR)/impl/RDFactory.java \
     $(PUSH_GCF_API_PACKAGE_DIR)/impl/ClassLoadingProtocolRegistry.java
+
+ifeq ($(USE_JUNIT_TEST), true)
+    SUBSYSTEM_PUSH_GCF_JUNIT_JAVA_FILES = \
+        $(PUSH_GCF_TESTS_DIR)/com/sun/midp/push/gcf/impl/AllTests.java \
+        $(PUSH_GCF_TESTS_DIR)/com/sun/midp/push/gcf/impl/Common.java \
+        $(PUSH_GCF_TESTS_DIR)/com/sun/midp/push/gcf/impl/MapProtocolRegistryTest.java \
+        $(PUSH_GCF_TESTS_DIR)/com/sun/midp/push/gcf/impl/RDFactoryTest.java
+endif
 
 ifeq ($(USE_I3_TEST), true)
     SUBSYSTEM_PUSH_GCF_I3TEST_JAVA_FILES =
