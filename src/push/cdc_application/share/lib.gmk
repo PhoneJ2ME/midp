@@ -42,7 +42,9 @@ LIB_SET += $(CDC_PUSH_LIB)
 # Common settings
 #
 
-CDC_SHARE_PUSH_CLASSES_DIR = $(SUBSYSTEM_PUSH_DIR)/$(CDC_PUSH_LIB)/share/classes
+CDC_SHARE_PUSH_DIR = $(SUBSYSTEM_PUSH_DIR)/$(CDC_PUSH_LIB)/share
+CDC_SHARE_PUSH_CLASSES_DIR = $(CDC_SHARE_PUSH_DIR)/classes
+CDC_SHARE_PUSH_TESTS_DIR = $(CDC_SHARE_PUSH_DIR)/tests
 
 # TBD: rename to com.sun.midp.cdc.push
 CDC_SHARE_PUSH_PACKAGE = com.sun.midp.jump.push
@@ -67,7 +69,7 @@ SUBSYSTEM_CDC_SHARE_PUSH_PACKAGES = \
 
 MIDP_JAVADOC_ALL += \
     -group "Shared CDC Push implementation" \
-    $(shell echo $(SUBSYSTEM_JUMP_PUSH_PACKAGES) | tr ' ' $(PATHSEP))
+    $(shell echo $(SUBSYSTEM_CDC_SHARE_PUSH_PACKAGES) | tr ' ' $(PATHSEP))
 
 SUBSYSTEM_CDC_SHARE_PUSH_JAVA_FILES = \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/AlarmController.java \
@@ -78,7 +80,13 @@ SUBSYSTEM_CDC_SHARE_PUSH_JAVA_FILES = \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/MIDPApp.java \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/PushController.java \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/ota/InstallerInterface.java \
-    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/persistence/Store.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/persistence/Store.java
+
+ifeq ($(USE_JUNIT_TEST), true)
+    # TBD: JUnitUtils should go into common tools
+    SUBSYSTEM_CDC_SHARE_PUSH_JUNIT_JAVA_FILES = \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/test/JUnitUtils.java
+endif
 
 ifeq ($(USE_I3_TEST), true)
     SUBSYSTEM_CDC_SHARE_PUSH_I3TEST_JAVA_FILES =
