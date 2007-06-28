@@ -42,7 +42,9 @@ LIB_SET += $(JUMP_PUSH_LIB)
 # Common settings
 #
 
-JUMP_PUSH_CLASSES_DIR = $(SUBSYSTEM_PUSH_DIR)/cdc_application/$(JUMP_PUSH_LIB)/classes
+JUMP_PUSH_DIR = $(SUBSYSTEM_PUSH_DIR)/cdc_application/$(JUMP_PUSH_LIB)
+JUMP_PUSH_CLASSES_DIR = $(JUMP_PUSH_DIR)/classes
+JUMP_PUSH_TESTS_DIR = $(JUMP_PUSH_DIR)/tests
 
 JUMP_PUSH_PACKAGE = com.sun.midp.jump.push
 
@@ -81,6 +83,12 @@ SUBSYSTEM_JUMP_PUSH_JAVA_FILES = \
     $(JUMP_PUSH_PACKAGE_DIR)/executive/remote/MIDPContainerInterface.java \
     $(JUMP_PUSH_PACKAGE_DIR)/share/Configuration.java \
     $(JUMP_PUSH_PACKAGE_DIR)/share/JUMPReservationDescriptor.java
+
+ifeq ($(USE_JUNIT_TEST), true)
+    SUBSYSTEM_JUMP_PUSH_JUNIT_JAVA_FILES = \
+        $(JUMP_PUSH_TESTS_DIR)/com/jump/module/contentstore/InMemoryContentStore.java \
+        $(JUMP_PUSH_TESTS_DIR)/com/jump/module/contentstore/InMemoryStore.java
+endif
 
 ifeq ($(USE_I3_TEST), true)
     SUBSYSTEM_JUMP_PUSH_I3TEST_JAVA_FILES =
