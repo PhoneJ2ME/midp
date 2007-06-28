@@ -85,7 +85,19 @@ SUBSYSTEM_CDC_SHARE_PUSH_JAVA_FILES = \
 ifeq ($(USE_JUNIT_TEST), true)
     # TBD: JUnitUtils should go into common tools
     SUBSYSTEM_CDC_SHARE_PUSH_JUNIT_JAVA_FILES = \
-        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/test/JUnitUtils.java
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/test/JUnitUtils.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/AlarmControllerTest.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/AllTests.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/ConnectionControllerTest.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/ListingLifecycleAdapter.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/MIDPAppTest.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/persistence/AbstractStoreUtils.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/persistence/AllTests.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/persistence/StoreTest.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/ProxyLifecycleAdapter.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/ThrowingLifecycleAdapter.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/jump/push/executive/persistence/StoreUtils.java \
+        $(CDC_SHARE_PUSH_PACKAGE_DIR)/executive/persistence/InMemoryStore.java
 endif
 
 ifeq ($(USE_I3_TEST), true)
