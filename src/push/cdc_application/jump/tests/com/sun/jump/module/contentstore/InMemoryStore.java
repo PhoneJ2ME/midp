@@ -409,7 +409,7 @@ public final class InMemoryStore extends JUMPStore {
         // TBD: reuse splitting
         final Vector elements = new Vector();
         int pos = 0;
-        for (;;) {
+        while (true) {
             final int p = uri.indexOf(URI_SEPARATOR, pos);
             if (p == -1) {
                 elements.add(uri.substring(pos));
