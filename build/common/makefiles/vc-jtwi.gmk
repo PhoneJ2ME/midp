@@ -34,8 +34,10 @@ ifndef _VC_JTWI_GMK_
 _VC_JTWI_GMK_	=
 
 # the VM library
-LIBS		+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
-MIDP_DEPS	+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
+ifeq ($(TARGET_VM), cldc_vm)
+  LIBS		+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
+  MIDP_DEPS	+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
+endif
 
 ifeq ($(USE_MULTIPLE_ISOLATES), true)
 ifeq ($(USE_I3_TEST), true)
