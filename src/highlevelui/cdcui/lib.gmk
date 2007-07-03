@@ -51,3 +51,8 @@ ifeq ($(TARGET_PLATFORM), linux_gci)
 SUBSYSTEM_CDCUI_JAVA_FILES += \
     $(CDCUI_CLASSES_DIR)/classes/com/sun/midp/lcdui/GCIEventListener.java
 endif
+
+ifeq ($(TARGET_PLATFORM), win32_gci)
+SUBSYSTEM_CDCUI_JAVA_FILES += \
+    $(CDCUI_CLASSES_DIR)/classes/com/sun/midp/lcdui/GCIEventListener.java
+endif
