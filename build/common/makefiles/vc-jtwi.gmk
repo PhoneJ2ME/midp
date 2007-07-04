@@ -34,7 +34,10 @@ ifndef _VC_JTWI_GMK_
 _VC_JTWI_GMK_	=
 
 # the VM library
-ifeq ($(TARGET_VM), cldc_vm)
+ifeq ($(TARGET_VM), cdc_vm)
+  LIBS		+= $(CDC_DIST_DIR)/bin/cvmi.lib
+  MIDP_DEPS	+= $(CDC_DIST_DIR)/bin/cvmi.lib
+else 
   LIBS		+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
   MIDP_DEPS	+= $(CLDC_DIST_DIR)/lib/cldc_vm$(g)$(r)$(LIB_SUFFIX)
 endif
