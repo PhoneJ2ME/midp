@@ -154,12 +154,43 @@ class ImageDataFactory implements AbstractImageDataFactory {
          * proceed to load and create image normally.
          */
         if (!loadCachedImage(data, name)) {
-            createImageFromStream(data,
-                                  ImageData.class.getResourceAsStream(name));
+            int i = 0;
+            InputStream is = null;
+            ClassLoader lastFailedLoader = null;
+            
+            /* The midlet might be loaded by a different classloader.
+             * So we need to use that classloader to find the resource.
+             * This is a bit slow since we need walk back the stack,
+             * but there is no other easier way to get the correct
+             * classloader. */
+            while (is == null) {
+                Class cl = sun.misc.CVM.getCallerClass(i);
+                if (cl == null) {
+                    createImageFromStream(data, null);
+
+                    data.createGCISurfaces();
+                    return data;
+                }
+
+                ClassLoader loader = cl.getClassLoader();
+                if (i == 0 || loader != lastFailedLoader) {
+                    is = cl.getResourceAsStream(name);
+                    if (is != null) {
+                        createImageFromStream(data,
+                                              cl.getResourceAsStream(name));
+
+                        data.createGCISurfaces();
+                        return data;
+                    } else {
+                        lastFailedLoader = loader;
+                    }
+                }
+
+                i++; /* the next caller */
+            }
         }
 
         data.createGCISurfaces();
-
         return data;
     }
 
