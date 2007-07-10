@@ -132,5 +132,5 @@ int lfjport_get_screen_width() {
  *  Return screen height
  */
 int lfjport_get_screen_height() {
-    return 210;
+    return 220;
 }

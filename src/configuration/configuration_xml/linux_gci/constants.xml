@@ -43,7 +43,7 @@
             Comment="(Fixed) full display width"/>
   <constant Type="int"
             Name="GAMECANVAS_FULLHEIGHT"
-            Value="210"
+            Value="220"
             Comment="(Fixed) full display height"/>
 
 <!-- Package javax.microedition.lcdui -->
@@ -65,11 +65,11 @@
             Comment="(Chameleon Only) full display width"/>
   <constant Type="int"
             Name="CHAM_HEIGHT"
-            Value="210"
+            Value="220"
             Comment="(Chameleon Only) display height"/>
   <constant Type="int"
             Name="CHAM_FULLHEIGHT"
-            Value="210"
+            Value="220"
             Comment="(Chameleon Only) full display height"/>
   <constant Type="boolean"
             Name="TRAVERSAL2D"
@@ -85,7 +85,7 @@
             Comment="(Fixed) full display width"/>
   <constant Type="int"
             Name="FULLHEIGHT"
-            Value="210" 
+            Value="220" 
             Comment="(Fixed) full display height"/>
   <constant Type="int"
             Name="NORMALWIDTH"
@@ -93,7 +93,7 @@
             Comment="(Fixed) normal width"/>
   <constant Type="int"
             Name="NORMALHEIGHT"
-            Value="210" 
+            Value="220" 
             Comment="(Fixed) normal height"/>
   <constant Type="int"
             Name="VERT_SCROLLBAR_WIDTH"
