@@ -1580,13 +1580,13 @@ public class Graphics {
 
         if ((transform < Sprite.TRANS_NONE) || 
             (transform > Sprite.TRANS_MIRROR_ROT90)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("line 1583");
         }
      
         int[] point = new int[]{x_dest, y_dest};
 
         if (!normalizeAnchor(point, width, height, anchor)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("line 1589");
         }
 
         // TODO check if the following needed - moved from native
@@ -1595,10 +1595,10 @@ public class Graphics {
         int imgWidth = src.getWidth();
         int imgHeight = src.getHeight();
         if ((height < 0) || (width < 0) || 
-            (point[0] < 0) || (point[1] < 0) ||
+            (x_src < 0) || (y_src < 0) ||
            ((x_src + width) > imgWidth) || 
            ((y_src + height) > imgHeight)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("line 1601");
         }
 
         renderRegion(src, x_src, y_src, width, height, transform, 

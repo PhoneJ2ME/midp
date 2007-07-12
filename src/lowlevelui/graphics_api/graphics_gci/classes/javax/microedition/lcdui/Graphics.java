@@ -1598,7 +1598,7 @@ public class Graphics {
         int imgWidth = img.getWidth();
         int imgHeight = img.getHeight();
         if ((height < 0) || (width < 0) || 
-            (point[0] < 0) || (point[1] < 0) ||
+            (x_src < 0) || (y_src < 0) ||
            ((x_src + width) > imgWidth) || 
            ((y_src + height) > imgHeight)) {
             throw new IllegalArgumentException();
