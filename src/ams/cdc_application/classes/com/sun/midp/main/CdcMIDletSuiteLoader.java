@@ -181,6 +181,7 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
 
     /** Gracefully terminates VM with proper return code */
     protected void exitLoader() {
+        System.exit(0);
     }
 
     /**
