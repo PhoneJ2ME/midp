@@ -198,6 +198,7 @@ public class EventQueue implements Runnable {
      * Queue a shutdown event to the native event queue.
      */
     private void sendShutdownEvent() {
+	post(new Event(EventTypes.EVENT_QUEUE_SHUTDOWN));
     }
 
 // #else

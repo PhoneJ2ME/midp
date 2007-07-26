@@ -29,12 +29,14 @@ package com.sun.midp.main;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.MIDlet;
+import com.sun.j2me.security.AccessController;
 import com.sun.midp.log.*;
 import com.sun.midp.configurator.Constants;
 import com.sun.midp.installer.InternalMIDletSuiteImpl;
 import com.sun.midp.lcdui.*;
 import com.sun.midp.midlet.*;
 import com.sun.midp.midletsuite.*;
+import com.sun.midp.security.*;
 
 /**
  * The first class loaded in VM by midp_run_midlet_with_args to initialize
@@ -146,9 +148,12 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
     protected void initSuiteEnvironment() {
         super.initSuiteEnvironment();
 
-        // Init internal state from the restored command state
         externalAppId = 0;
         midletDisplayName = null;
+
+        /* Set up permission checking for this suite. */
+        AccessController.setAccessControlContext(
+            new CdcAccessControlContext(midletSuite));
     }
 
 
@@ -181,6 +186,7 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
 
     /** Gracefully terminates VM with proper return code */
     protected void exitLoader() {
+        System.exit(0);
     }
 
     /**
@@ -227,14 +233,6 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
 
         reportError(errorCode, t.getMessage());
     }
-
-    /**
-     * Set foreground display native state, so the native code will know
-     * which display can draw.
-     *
-     * @param displayId Display ID
-     */
-    private native void setForegroundInNativeState(int displayId);
 
     /**
      * Gets AMS error message by generic error code.
@@ -415,7 +413,7 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
             return;
         }
 
-        setForegroundInNativeState(displayId);
+        NativeForegroundState.setState(internalSecurityToken, displayId);
 
         fc.handleDisplayForegroundNotifyEvent();
     }
