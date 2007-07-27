@@ -42,6 +42,11 @@ ifeq ($(TARGET_VM), cdc_vm)
   USE_NATIVE_PUSH=false
 endif
 
+ifeq ($(CVM_INCLUDE_JUMP), true)
+  USE_PUSH_GCF=true
+  USE_PUSH_SHARED_IMPL=true
+endif
+
 # Adds to global SUBSYSTEMS list
 #
 PUSH_SUBSYSTEM = push
@@ -66,8 +71,7 @@ ifeq ($(USE_NATIVE_PUSH), false)
     # Currently Push-GCF protocols are not used in native push flavour
     ifeq ($(TARGET_VM), cdc_vm)
         # Currently Push-GCF protocols are for CDC-based configurations only
-        ifeq ($(CVM_INCLUDE_JUMP), true)
-            # Currently Push-GCF protocols are for JUMP configuration only
+        ifeq ($(USE_PUSH_GCF), true)
             include $(SUBSYSTEM_PUSH_DIR)/push_gcf/lib.gmk
         endif
     endif
@@ -80,8 +84,10 @@ endif
 
 ifeq ($(USE_NATIVE_PUSH), false)
     ifeq ($(TARGET_VM), cdc_vm)
-        ifeq ($(CVM_INCLUDE_JUMP), true)
+        ifeq ($(USE_PUSH_SHARED_IMPL), true)
             include $(SUBSYSTEM_PUSH_DIR)/cdc_application/share/lib.gmk
+        endif
+        ifeq ($(CVM_INCLUDE_JUMP), true)
             include $(SUBSYSTEM_PUSH_DIR)/cdc_application/jump/lib.gmk
         endif
     endif
