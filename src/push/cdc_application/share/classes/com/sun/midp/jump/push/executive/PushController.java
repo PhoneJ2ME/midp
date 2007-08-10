@@ -37,7 +37,7 @@ import javax.microedition.io.ConnectionNotFoundException;
  * Manages both connections and alarms.
  * </p>
  */
-final class PushController {
+public final class PushController {
     /** Alarm controller. */
     private final AlarmController alarmController;
 
