@@ -70,6 +70,7 @@ extern "C" {
 #include <midp_mastermode_port.h>
 #include <anc_indicators.h>
 
+#define KEYMAP_MD_KEY_HOME (KEYMAP_KEY_MACHINE_DEP)
 
 /* global variables defined in midp_msgQueue_md.c */
 extern int inMidpEventLoop;
@@ -91,6 +92,7 @@ static RECT rcVisibleDesktop;
 static HANDLE eventThread;
 static HINSTANCE instanceMain;
 static jboolean reverse_orientation;
+static int lastKeyPressed = 0;
 
 
 
@@ -121,7 +123,8 @@ DWORD lastUserInputTick = 0;
 static int dirty_x1, dirty_y1, dirty_x2, dirty_y2;
 
 static void process_skipped_refresh();
-static LRESULT process_key(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp);
+static LRESULT process_key(HWND hwnd, UINT action, int key);
+static LRESULT process_system_key(HWND hwnd, int key);
 
 static gxj_pixel_type* startDirectPaint(int &dstWidth, int &dstHeight,
                                    int &dstYPitch);
@@ -435,6 +438,14 @@ static BOOL InitInstance(HINSTANCE hInstance, int CmdShow) {
     winceapp_set_window_handle(_hwndMain);
     ShowWindow(_hwndMain, CmdShow);
     UpdateWindow(_hwndMain);
+
+#ifdef ENABLE_CDC
+    /* Temporary fix to enter exclusive input mode.
+     * A better solution should register for hot keys.
+     */
+    GXOpenInput();
+#endif
+
     return TRUE;
 }
 
@@ -504,6 +515,13 @@ void winceapp_init() {
     eventThread = CreateThread(NULL, 0, CreateWinCEWindow, 0, 0, NULL);
 }
 
+static jint mapAction(UINT msg, LPARAM lp) {
+    if (msg == WM_KEYUP)
+        return KEYMAP_STATE_RELEASED;
+    else
+        return (lp&0x40000000)?KEYMAP_STATE_REPEATED:KEYMAP_STATE_PRESSED;
+}
+
 static jint mapKey(WPARAM wParam, LPARAM lParam) {
     switch (wParam) {
     case VK_F9:  return KEYMAP_KEY_GAMEA; /* In PPC emulator only  */
@@ -523,9 +541,15 @@ static jint mapKey(WPARAM wParam, LPARAM lParam) {
     case VK_BACK:
         return KEYMAP_KEY_BACKSPACE;
 
+    case VK_TTALK:
+    case VK_THOME:
+        return KEYMAP_MD_KEY_HOME;
+    case VK_TEND:
+        return KEYMAP_KEY_END;
+
     }
 
-    if (wParam >= ' ' && wParam <= 127) {
+    if (wParam >= 0x20 && wParam <= 0x7F) {
         /* Some ASCII keys sent by emulator or mini keyboard */
         return (jint)wParam;
     }
@@ -561,6 +585,8 @@ LRESULT CALLBACK winceapp_wndproc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     int cmd;
     DWORD err;
     static int ignoreCancelMode = 0;
+    int result = 0;
+    int action = 0;
 
     switch (msg) {
     case WM_CREATE:
@@ -686,6 +712,10 @@ LRESULT CALLBACK winceapp_wndproc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
         return DefWindowProc(hwnd, msg, wp, lp);
 
     case WM_DESTROY:
+#ifdef ENABLE_CDC
+        /* Temporary fix, leaving exclusive input mode */
+        GXCloseInput();
+#endif
         PostQuitMessage(0);
         exit(0);
         return 0;
@@ -716,31 +746,52 @@ LRESULT CALLBACK winceapp_wndproc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     }
     case WM_KEYDOWN: /* fall through */
     case WM_KEYUP:
-        return process_key(hwnd, msg, wp, lp);
+        switch (wp) {
+        case VK_RETURN:  
+        case VK_BACK: 
+        case VK_UP: 
+        case VK_DOWN: 
+        case VK_LEFT: 
+        case VK_RIGHT:
+            return process_key(hwnd, mapAction(msg, lp), mapKey(wp, lp));
+        case VK_THOME:
+        case VK_TTALK:
+        case VK_TEND:
+            if (WM_KEYDOWN == msg)
+                return process_system_key(hwnd, mapKey(wp, lp));
+            break;
+        default:
+            // May need special handling for soft keys?  Not sure yet...
+            if (0 != lastKeyPressed && WM_KEYUP == msg) { 
+                //should use cached pressed key code for input
+                result = process_key(hwnd, KEYMAP_STATE_RELEASED, lastKeyPressed);
+            }
+            lastKeyPressed = 0;
+        }
+        return result;
+    case WM_CHAR:
+        if (wp >= 0x20 && wp <= 0x7f) {
+            lastKeyPressed = wp;
+            result = process_key(hwnd, mapAction(msg, lp), lastKeyPressed);
+        }
+        return result;
     default:
         return DefWindowProc(hwnd, msg, wp, lp);
     }
     return DefWindowProc(hwnd, msg, wp, lp);
 }
 
-static LRESULT process_key(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
-    int key;
+static LRESULT process_key(HWND hwnd, UINT action, int key) {
     lastUserInputTick = GetTickCount();
 
-    switch (key = mapKey(wp, lp)) {
+    switch (key) {
     case KEYMAP_KEY_INVALID:
         break;
     default:
+        pMidpEventResult->ACTION = action;
         pMidpEventResult->type = MIDP_KEY_EVENT;
         pMidpEventResult->CHR = key;
 
-        if (msg == WM_KEYUP) {
-            pMidpEventResult->ACTION = KEYMAP_STATE_RELEASED;
-        } else if (lp & 0x40000000) {
-            pMidpEventResult->ACTION = KEYMAP_STATE_REPEATED;
-        } else {
-            pMidpEventResult->ACTION = KEYMAP_STATE_PRESSED;
-        }
         pSignalResult->waitingFor = UI_SIGNAL;
         pMidpEventResult->DISPLAY = gForegroundDisplayId;
         sendMidpKeyEvent(pMidpEventResult, sizeof(*pMidpEventResult));
@@ -749,6 +800,25 @@ static LRESULT process_key(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     return 0;
 }
 
+static LRESULT process_system_key(HWND hwnd, int key) {
+    switch (key) {
+    case KEYMAP_MD_KEY_HOME:
+        pSignalResult->waitingFor = AMS_SIGNAL;
+        pMidpEventResult->type = SELECT_FOREGROUND_EVENT;
+        pMidpEventResult->intParam1 = 0;
+        sendMidpKeyEvent(pMidpEventResult, sizeof(*pMidpEventResult));
+        break;
+
+    case KEYMAP_KEY_END:
+        pSignalResult->waitingFor = AMS_SIGNAL;
+        pMidpEventResult->type = MIDLET_DESTROY_REQUEST_EVENT;
+        pMidpEventResult->DISPLAY = gForegroundDisplayId;
+        pMidpEventResult->intParam1 = gForegroundIsolateId;
+        sendMidpKeyEvent(pMidpEventResult, sizeof(*pMidpEventResult));
+        break;
+	}
+	return 0;
+}
 
 /**
  * Finalize the WINCE native resources.
@@ -935,9 +1005,13 @@ void winceapp_refresh(int x1, int y1, int x2, int y2) {
     }
 
     gxj_pixel_type *dst = startDirectPaint(dstWidth, dstHeight, dstYPitch);
-    int maxY = dstHeight - titleHeight;
     
 #if ENABLE_DIRECT_DRAW
+    // startDirectoryPaint() could release the surfaces
+    if (g_pDDSPrimary == NULL)
+        return;
+
+    int maxY = dstHeight - titleHeight;
     if (y2 > maxY) {
         y2 = maxY;
     }
@@ -970,6 +1044,7 @@ void winceapp_refresh(int x1, int y1, int x2, int y2) {
 
 #else /* !ENABLE_DIRECT_DRAW */
 
+    int maxY = dstHeight - titleHeight;
     if (dst != NULL) {
         srcWidth = x2 - x1;
         srcHeight = y2 - y1;
