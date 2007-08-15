@@ -458,8 +458,8 @@ src/protocol/ssocket/classes/com/sun/midp/io/j2me/serversocket/package.html svn_
 src/protocol/udp/classes/com/sun/midp/io/j2me/datagram/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/jump/classes/com/sun/midp/jump/push/executive/remote/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/jump/classes/com/sun/midp/jump/push/share/package.html svn_mime_002dtype=text%2Fhtml
-src/push/cdc_application/share/classes/com/sun/midp/cdc/push/controller/ota/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/share/classes/com/sun/midp/cdc/push/controller/package.html svn_mime_002dtype=text%2Fhtml
+src/push/cdc_application/share/classes/com/sun/midp/cdc/push/ota/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/share/classes/com/sun/midp/cdc/push/persistence/package.html svn_mime_002dtype=text%2Fhtml
 src/push/push_api/cdc_application/classes/com/sun/midp/io/j2me/push/package.html svn_mime_002dtype=text%2Fhtml
 src/push/push_api/javapush/classes/com/sun/midp/io/j2me/push/package.html svn_mime_002dtype=text%2Fhtml
