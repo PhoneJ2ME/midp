@@ -22,34 +22,27 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.controller;
 
-import com.sun.test.JUnitUtils;
+import java.util.Vector;
 
-import junit.framework.Test;
+/**
+ * Simplistic implementation of lifecycle interface
+ * that just lists all invocations.
+ */
+final class ListingLifecycleAdapter implements LifecycleAdapter {
+    private final Vector apps = new Vector();
 
-/** Package test suite. */
-public final class AllTests {
-    /** Hidden ctor. */
-    private AllTests() { }
-
-    /**
-     * Forms a suite.
-     *
-     * @return test suite to run
-     */
-    public static Test suite() {
-        return JUnitUtils.createSuite(AllTests.class, new Class [] {
-            StoreTest.class,
-        });
+    public void launchMidlet(final int midletSuiteID, final String midlet) {
+        apps.add(new MIDPApp(midletSuiteID, midlet));
     }
 
-    /**
-     * Stand-alone runner.
-     *
-     * @param args args
-     */
-    public static final void main(final String[] args) {
-        junit.textui.TestRunner.run(suite());
+    boolean hasBeenInvokedOnceFor(final int midletSuiteID, final String midlet) {
+        return (apps.size() == 1)
+            && new MIDPApp(midletSuiteID, midlet).equals(apps.get(0));
+    }
+
+    boolean hasNotBeenInvoked() {
+        return apps.isEmpty();
     }
 }

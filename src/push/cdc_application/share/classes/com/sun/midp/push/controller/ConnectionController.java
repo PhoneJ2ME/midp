@@ -22,12 +22,12 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
 import com.sun.midp.push.gcf.ConnectionReservation;
 import com.sun.midp.push.gcf.DataAvailableListener;
 import com.sun.midp.push.gcf.ReservationDescriptor;
-import com.sun.midp.jump.push.executive.persistence.Store;
+import com.sun.midp.push.persistence.Store;
 import com.sun.midp.push.gcf.PermissionCallback;
 import com.sun.midp.push.gcf.ReservationDescriptorFactory;
 import java.io.IOException;

@@ -22,9 +22,9 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive.ota;
+package com.sun.midp.push.ota;
 
-import com.sun.midp.jump.push.executive.ConnectionInfo;
+import com.sun.midp.push.controller.ConnectionInfo;
 import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
 

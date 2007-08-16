@@ -21,9 +21,9 @@
  * Clara, CA 95054 or visit www.sun.com if you need additional
  * information or have any questions.
  */
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.persistence;
 
-import com.sun.midp.jump.push.executive.ConnectionInfo;
+import com.sun.midp.push.controller.ConnectionInfo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;

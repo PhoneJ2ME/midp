@@ -22,12 +22,36 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
-/** Always throwing implementation of lifecycle adapter. */
-final class ThrowingLifecycleAdapter implements LifecycleAdapter {
-    /** {@inheritDoc} */
-    public void launchMidlet(final int midletSuiteID, final String midlet) {
-        throw new RuntimeException("throwing lifecycle adapter");
+import com.sun.test.JUnitUtils;
+
+import junit.framework.Test;
+
+/** Package test suite. */
+public final class AllTests {
+    /** Hidden ctor. */
+    private AllTests() { }
+
+    /**
+     * Forms a suite.
+     *
+     * @return test suite to run
+     */
+    public static Test suite() {
+        return JUnitUtils.createSuite(AllTests.class, new Class [] {
+            AlarmControllerTest.class,
+            ConnectionControllerTest.class,
+            MIDPAppTest.class,
+        });
+    }
+
+    /**
+     * Stand-alone runner.
+     *
+     * @param args args
+     */
+    public static void main(final String[] args) {
+        junit.textui.TestRunner.run(suite());
     }
 }

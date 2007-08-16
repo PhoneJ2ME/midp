@@ -22,12 +22,12 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.persistence;
 
 import java.io.IOException;
 import java.util.Map;
 
-import com.sun.midp.jump.push.executive.ConnectionInfo;
+import com.sun.midp.push.controller.ConnectionInfo;
 
 /**
  * Persistent store interface.

@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.persistence;
 
 import com.sun.test.JUnitUtils;
 
@@ -40,9 +40,7 @@ public final class AllTests {
      */
     public static Test suite() {
         return JUnitUtils.createSuite(AllTests.class, new Class [] {
-            AlarmControllerTest.class,
-            ConnectionControllerTest.class,
-            MIDPAppTest.class,
+            StoreTest.class,
         });
     }
 
@@ -51,7 +49,7 @@ public final class AllTests {
      *
      * @param args args
      */
-    public static void main(final String[] args) {
+    public static final void main(final String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 }

@@ -22,9 +22,9 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
-import com.sun.midp.jump.push.executive.ota.InstallerInterface;
+import com.sun.midp.push.ota.InstallerInterface;
 import com.sun.midp.push.gcf.PermissionCallback;
 import com.sun.midp.push.gcf.ReservationDescriptorFactory;
 import java.io.IOException;

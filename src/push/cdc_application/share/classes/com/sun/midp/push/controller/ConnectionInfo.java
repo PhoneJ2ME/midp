@@ -21,7 +21,7 @@
  * Clara, CA 95054 or visit www.sun.com if you need additional
  * information or have any questions.
  */
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
 import java.io.Serializable;
 

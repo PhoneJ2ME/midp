@@ -22,11 +22,11 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
-import com.sun.midp.jump.push.executive.persistence.StoreUtils;
+import com.sun.midp.push.persistence.StoreUtils;
 import junit.framework.*;
-import com.sun.midp.jump.push.executive.persistence.Store;
+import com.sun.midp.push.persistence.Store;
 import java.io.IOException;
 import java.util.Map;
 import javax.microedition.io.ConnectionNotFoundException;

@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.persistence;
 
 import java.io.IOException;
 

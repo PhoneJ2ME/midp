@@ -22,9 +22,9 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
-import com.sun.midp.jump.push.executive.persistence.Store;
+import com.sun.midp.push.persistence.Store;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;

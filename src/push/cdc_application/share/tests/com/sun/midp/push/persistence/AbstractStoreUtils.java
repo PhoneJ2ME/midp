@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.persistence;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ import java.io.IOException;
  *
  * <p>
  * Each stack MUST define
- * <code>com.sun.midp.jump.push.executive.persistence.StoreUtils</code> class
+ * <code>com.sun.midp.push.persistence.StoreUtils</code> class
  * which extends this class.
  * </p>
  */

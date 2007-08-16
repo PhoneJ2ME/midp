@@ -1,4 +1,4 @@
-package com.sun.midp.jump.push.executive.persistence;
+package com.sun.midp.push.persistence;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.midp.jump.push.executive.ConnectionInfo;
+import com.sun.midp.push.controller.ConnectionInfo;
 
 /** In memory impl of <code>Store</code>. */
 public final class InMemoryStore implements Store {

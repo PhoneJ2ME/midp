@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.jump.push.executive;
+package com.sun.midp.push.controller;
 
 /** Proxying lifecycle adapter. */
 final class ProxyLifecycleAdapter implements LifecycleAdapter {
