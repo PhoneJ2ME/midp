@@ -23,9 +23,13 @@
  */
 package com.sun.midp.jump.push.executive.persistence;
 
+import com.sun.midp.push.controller.ConnectionInfo;
+import com.sun.midp.push.persistence.Store;
+import com.sun.midp.push.persistence.Store.AlarmsConsumer;
+import com.sun.midp.push.persistence.Store.ConnectionsConsumer;
+
 import com.sun.jump.module.contentstore.JUMPNode;
 import com.sun.jump.module.contentstore.JUMPStoreHandle;
-import com.sun.midp.jump.push.executive.ConnectionInfo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;

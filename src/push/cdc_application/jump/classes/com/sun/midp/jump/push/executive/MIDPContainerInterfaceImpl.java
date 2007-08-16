@@ -24,6 +24,8 @@
 
 package com.sun.midp.jump.push.executive;
 
+import com.sun.midp.push.controller.PushController;
+
 import com.sun.midp.jump.push.executive.remote.MIDPContainerInterface;
 import com.sun.midp.jump.push.share.JUMPReservationDescriptor;
 import java.io.IOException;

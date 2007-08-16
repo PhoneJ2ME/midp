@@ -31,7 +31,7 @@ import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
 
 /** Installer interface implementation. */
-final class InstallerInterfaceImpl implements InstallerInterface {
+public final class InstallerInterfaceImpl implements InstallerInterface {
     /** Push controller. */
     private final PushController pushController;
 

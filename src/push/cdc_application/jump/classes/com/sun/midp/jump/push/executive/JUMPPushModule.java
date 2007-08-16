@@ -25,7 +25,7 @@
 package com.sun.midp.jump.push.executive;
 
 import com.sun.jump.module.JUMPModule;
-import com.sun.midp.jump.push.executive.ota.InstallerInterface;
+import com.sun.midp.push.ota.InstallerInterface;
 
 public interface JUMPPushModule extends JUMPModule {
     /**
