@@ -32,6 +32,8 @@ import java.io.IOException;
 import com.sun.midp.midlet.MIDletSuite;
 import com.sun.midp.midlet.MIDletStateHandler;
 
+import sun.misc.MIDPConfig;
+
 /**
  * ImageFactory implementation based on putpixel graphics library and stores
  * data on Java heap.
@@ -154,40 +156,8 @@ class ImageDataFactory implements AbstractImageDataFactory {
          * proceed to load and create image normally.
          */
         if (!loadCachedImage(data, name)) {
-            int i = 0;
-            InputStream is = null;
-            ClassLoader lastFailedLoader = null;
-            
-            /* The midlet might be loaded by a different classloader.
-             * So we need to use that classloader to find the resource.
-             * This is a bit slow since we need walk back the stack,
-             * but there is no other easier way to get the correct
-             * classloader. */
-            while (is == null) {
-                Class cl = sun.misc.CVM.getCallerClass(i);
-                if (cl == null) {
-                    createImageFromStream(data, null);
-
-                    data.createGCISurfaces();
-                    return data;
-                }
-
-                ClassLoader loader = cl.getClassLoader();
-                if (i == 0 || loader != lastFailedLoader) {
-                    is = cl.getResourceAsStream(name);
-                    if (is != null) {
-                        createImageFromStream(data,
-                                              cl.getResourceAsStream(name));
-
-                        data.createGCISurfaces();
-                        return data;
-                    } else {
-                        lastFailedLoader = loader;
-                    }
-                }
-
-                i++; /* the next caller */
-            }
+            createImageFromStream(data,
+                                  MIDPConfig.getResourceAsStream(name));
         }
 
         data.createGCISurfaces();
@@ -338,6 +308,8 @@ class ImageDataFactory implements AbstractImageDataFactory {
         // Copy either the Java or romized data to its own array
         loadRegion(dataDest, dataSource, x, y, w, h, transform);
 
+        dataDest.createGCISurfaces();
+
         return dataDest;
     }
 
@@ -409,6 +381,8 @@ class ImageDataFactory implements AbstractImageDataFactory {
         ImageData data = new ImageData(width, height, false, false,
                                        processAlpha);
         loadRGB(data, rgb);
+
+        data.createGCISurfaces();
 
         return data;
     }
@@ -511,6 +485,8 @@ class ImageDataFactory implements AbstractImageDataFactory {
 
             try {
                 decode(data, buffer, 0, length);
+		data.createGCISurfaces();
+
             } catch (IllegalArgumentException e) {
                 throw new java.io.IOException();
             }

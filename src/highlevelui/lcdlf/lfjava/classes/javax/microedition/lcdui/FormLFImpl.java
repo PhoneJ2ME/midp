@@ -129,74 +129,92 @@ class FormLFImpl extends ScreenLFImpl implements FormLF {
                 pendingCurrentItem = i;
                 return;
             }
-            lScrollToItem(i);
         }
+        uScrollToItem(i);
     }
 
     /**
      * Scrolls to the passed in Item. 
      * @param item The Item that should be shown on the screen.
      */
-    private void lScrollToItem(Item item) {
+    private void uScrollToItem(Item item) {
         if (item == null || item.owner != owner) {
             return;
         }
 
+        ItemLFImpl[] itemsCopy = null;
+        int itemsCopyCount = 0;
+        int traverseIndexCopy = -1;
+        ItemLFImpl itemLF = null;
+        
+        synchronized (Display.LCDUILock) {
+            itemsCopy = new ItemLFImpl[numOfLFs];
+            itemsCopyCount = numOfLFs;
+            System.arraycopy(itemLFs, 0, itemsCopy, 0, numOfLFs);
+            traverseIndexCopy = traverseIndex;
+        }
+
+        
         int index = -1;
         
-        ItemLFImpl itemLF = null;
-        if (traverseIndex != -1 && (itemLFs[traverseIndex].item == item)) {
-            index = traverseIndex;
+        if (traverseIndexCopy != -1 && (itemsCopy[traverseIndexCopy].item == item)) {
+            index = traverseIndexCopy;
         } else {
-            for (int i = 0; i < numOfLFs; i++) {
-                if (itemLFs[i].item == item) {
+            for (int i = 0; i < itemsCopyCount; i++) {
+                if (itemsCopy[i].item == item) {
                     index = i;
                     break;
                 }
             }
         }
 
-        // item not found
-        if (index==-1) {
-            return;
-        }
-        
-        itemLF = itemLFs[index];
-
-        if (index != traverseIndex) {
-        
-            // Ensure the item is visible
-            if (!itemCompletelyVisible(itemLF)) {
+        // item is found
+        if (index > -1) {
+            itemLF = itemsCopy[index];
+            
+            
+            // Ensure the item is visible at least partially
+            if (!itemPartiallyVisible(itemLF)) {
                 viewable[Y] = itemLF.bounds[Y];
-                
                 if (viewable[Y] + viewport[HEIGHT] > viewable[HEIGHT]) {
                     viewable[Y] = viewable[HEIGHT] - viewport[HEIGHT];
+                    uHideShowItems(itemsCopy);
                 }
             }
             
-            // We record the present traverseItem because if it
-            // is valid, we will have to call traverseOut() on that
-            // item when we process the invalidate call.
-            if (traverseIndex != -1) {
-                lastTraverseItem = itemLFs[traverseIndex];
-            }
-
-            // If the item is not interactive, we just leave it
-            // visible on the screen, but set traverseIndex to -1
-            // so that any interactive item which is visible will
-            // be traversed to when the invalidate occurs
-            traverseIndex = itemLF.shouldSkipTraverse() ? -1 : index;
-            lRequestInvalidate();
-        } else {
-            // Ensure the item is visible
-            if (!itemPartiallyVisible(itemLF)) {
-                viewable[Y] = itemLF.bounds[Y];
+            if (index != traverseIndexCopy) {
                 
-                if (viewable[Y] + viewport[HEIGHT] > viewable[HEIGHT]) {
-                    viewable[Y] = viewable[HEIGHT] - viewport[HEIGHT];
+                // We record the present traverseItem because if it
+                // is valid, we will have to call traverseOut() on that
+                // item when we process the invalidate call.
+                if (traverseIndexCopy != -1) {
+                    try {
+                        itemsCopy[traverseIndexCopy].uCallTraverseOut();
+                    } catch (Throwable t) {
+                        if (Logging.REPORT_LEVEL <= Logging.WARNING) {
+                            Logging.report(Logging.WARNING, LogChannels.LC_HIGHUI,
+                                           "Throwable while traversing out");
+                        }
+                    }
                 }
+                
+                // If the item is not interactive, we just leave it
+                // visible on the screen, but set traverseIndex to -1
+                // so that any interactive item which is visible will
+                // be traversed to when the invalidate occurs
+                traverseIndexCopy = itemLF.shouldSkipTraverse() ? -1 : index;
+                
+                if (traverseIndexCopy > -1) {
+                    itemTraverse = uCallItemTraverse(itemsCopy[traverseIndexCopy], CustomItem.NONE);
+                }
+                
+                synchronized (Display.LCDUILock) {
+                    traverseIndex = traverseIndexCopy;
+                }
+                updateCommandSet();
             }
-        }
+            uRequestPaint();
+        } // index > -1
     }
 
 
@@ -519,13 +537,8 @@ class FormLFImpl extends ScreenLFImpl implements FormLF {
         uShowContents(true);
 
         synchronized (Display.LCDUILock) {
-           scrollInitialized = false;
-           
-           if (pendingCurrentItem != null) {
-
-              lScrollToItem(pendingCurrentItem);
-              pendingCurrentItem = null;
-           }
+            scrollInitialized = false;
+            pendingCurrentItem = null;
         }
     }
     
@@ -768,9 +781,7 @@ class FormLFImpl extends ScreenLFImpl implements FormLF {
             y = (y + viewable[Y]) - v.getInnerBounds(Y);
             v.uCallPointerPressed(x, y);
 
-            synchronized (Display.LCDUILock) {
-                lScrollToItem(v.item);
-            }
+            uScrollToItem(v.item);
         }
     }
 
@@ -965,6 +976,16 @@ class FormLFImpl extends ScreenLFImpl implements FormLF {
             traverseIndexCopy = traverseIndex;
             itemsModified = false;
 
+            if (pendingCurrentItem != null) {
+                for (int i = 0; i < itemsCopyCount; i++) {
+                    if (itemsCopy[i].item == pendingCurrentItem) {
+                        traverseIndexCopy = i;
+                        keepFocusOnTheScreen = true;
+                        break;
+                    }
+                }
+            }
+
         } // synchronized
         
         // We issue a default traverse to setup focus
@@ -1018,9 +1039,9 @@ class FormLFImpl extends ScreenLFImpl implements FormLF {
             
             uRequestPaint(); // request to paint contents area
             
-            synchronized (Display.LCDUILock) {
-                if (keepFocusOnTheScreen) {
-                    lScrollToItem(itemsCopy[traverseIndexCopy].item);
+            if (keepFocusOnTheScreen) {
+                uScrollToItem(itemsCopy[traverseIndexCopy].item);
+                synchronized (Display.LCDUILock) {
                     keepFocusOnTheScreen = false;
                 }
             }
