@@ -43,7 +43,6 @@ ifeq ($(TARGET_VM), cdc_vm)
 endif
 
 ifeq ($(USE_JUMP), true)
-  USE_PUSH_GCF=true
   USE_PUSH_SHARED_IMPL=true
 endif
 
@@ -61,21 +60,6 @@ SUBSYSTEM_PUSH_DIR = $(SUBSYSTEM_DIR)/$(PUSH_SUBSYSTEM)
 #####################################################################
 
 include $(SUBSYSTEM_PUSH_DIR)/push_api/lib.gmk
-
-#####################################################################
-# Push-GCF Interfaces Library
-# Description: interfaces between Push and GCF subsystems
-#####################################################################
-
-ifeq ($(USE_NATIVE_PUSH), false)
-    # Currently Push-GCF protocols are not used in native push flavour
-    ifeq ($(TARGET_VM), cdc_vm)
-        # Currently Push-GCF protocols are for CDC-based configurations only
-        ifeq ($(USE_PUSH_GCF), true)
-            include $(SUBSYSTEM_PUSH_DIR)/push_gcf/lib.gmk
-        endif
-    endif
-endif
 
 #####################################################################
 # JUMP Push Library

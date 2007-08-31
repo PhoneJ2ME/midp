@@ -65,7 +65,9 @@ LIB_JAVA_PUSH_SOURCEPATH = $(CDC_SHARE_PUSH_CLASSES_DIR)
 SUBSYSTEM_CDC_SHARE_PUSH_PACKAGES = \
     $(CDC_SHARE_PUSH_PACKAGE).controller \
     $(CDC_SHARE_PUSH_PACKAGE).ota \
-    $(CDC_SHARE_PUSH_PACKAGE).persistence
+    $(CDC_SHARE_PUSH_PACKAGE).persistence \
+    $(CDC_SHARE_PUSH_PACKAGE).reservation \
+    $(CDC_SHARE_PUSH_PACKAGE).reservation.impl
 
 MIDP_JAVADOC_ALL += \
     -group "Shared CDC Push implementation" \
@@ -80,7 +82,18 @@ SUBSYSTEM_CDC_SHARE_PUSH_JAVA_FILES = \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/controller/MIDPApp.java \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/controller/PushController.java \
     $(CDC_SHARE_PUSH_PACKAGE_DIR)/ota/InstallerInterface.java \
-    $(CDC_SHARE_PUSH_PACKAGE_DIR)/persistence/Store.java
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/persistence/Store.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/ConnectionReservation.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/DataAvailableListener.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/ReservationDescriptor.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/ProtocolFactory.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/ConnectionName.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/MapProtocolRegistry.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/ProtocolClassResolver.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/ProtocolRegistry.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/ReservationDescriptorFactory.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/RDFactory.java \
+    $(CDC_SHARE_PUSH_PACKAGE_DIR)/reservation/impl/ClassLoadingProtocolRegistry.java
 
 ifeq ($(USE_JUNIT_TEST), true)
     # TBD: JUnitUtils should go into common tools
@@ -96,7 +109,12 @@ ifeq ($(USE_JUNIT_TEST), true)
         $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/persistence/StoreTest.java \
         $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/controller/ProxyLifecycleAdapter.java \
         $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/controller/ThrowingLifecycleAdapter.java \
-        $(CDC_SHARE_PUSH_PACKAGE_DIR)/persistence/InMemoryStore.java
+        $(CDC_SHARE_PUSH_PACKAGE_DIR)/persistence/InMemoryStore.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/reservation/impl/AllTests.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/reservation/impl/Common.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/reservation/impl/MapProtocolRegistryTest.java \
+        $(CDC_SHARE_PUSH_TESTS_DIR)/com/sun/midp/push/reservation/impl/RDFactoryTest.java
+
 
     # TBD: temporal hack: this file should be only included into only plain MIDP on CDC stack:
     # any other CDC-based stack should provide its own copy of this class
