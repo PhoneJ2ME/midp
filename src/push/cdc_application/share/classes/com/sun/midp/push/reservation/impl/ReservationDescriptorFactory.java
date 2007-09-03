@@ -22,7 +22,11 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf;
+package com.sun.midp.push.reservation.impl;
+
+import com.sun.midp.push.reservation.ReservationDescriptor;
+
+import com.sun.j2me.security.AccessControlContext;
 
 import javax.microedition.io.ConnectionNotFoundException;
 
@@ -48,7 +52,7 @@ public interface ReservationDescriptorFactory {
      * {@link javax.microedition.io.PushRegistry#registerConnection}
      * (cannot be <code>null</code>)
      *
-     * @param permissionCallback callback to check permissions (cannot be
+     * @param context object to check permissions (cannot be
      * <code>null</code>, use dummy implementation if there is need to bypass
      * security checks)
      *
@@ -63,7 +67,7 @@ public interface ReservationDescriptorFactory {
     ReservationDescriptor getDescriptor(
             String connectionName,
             String filter,
-            PermissionCallback permissionCallback) throws
+            AccessControlContext context) throws
                 IllegalArgumentException,
                 ConnectionNotFoundException;
 }

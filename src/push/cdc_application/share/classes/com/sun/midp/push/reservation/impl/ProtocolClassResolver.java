@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf.impl;
+package com.sun.midp.push.reservation.impl;
 
 /** Generic resolving of classes implementing the protocol. */
 public interface ProtocolClassResolver {

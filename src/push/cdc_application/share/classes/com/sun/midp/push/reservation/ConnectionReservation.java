@@ -22,7 +22,7 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf;
+package com.sun.midp.push.reservation;
 
 /**
  * Connection reservation.

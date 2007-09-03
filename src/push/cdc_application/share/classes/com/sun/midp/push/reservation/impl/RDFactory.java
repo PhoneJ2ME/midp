@@ -22,13 +22,14 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf.impl;
+package com.sun.midp.push.reservation.impl;
 
 import javax.microedition.io.ConnectionNotFoundException;
 
-import com.sun.midp.push.gcf.PermissionCallback;
-import com.sun.midp.push.gcf.ReservationDescriptor;
-import com.sun.midp.push.gcf.ReservationDescriptorFactory;
+import com.sun.j2me.security.AccessControlContext;
+
+import com.sun.midp.push.reservation.ProtocolFactory;
+import com.sun.midp.push.reservation.ReservationDescriptor;
 
 /**
  * Descriptor factories based impl of <code>ReservationDescriptorFactory</code>.
@@ -49,7 +50,7 @@ public final class RDFactory implements ReservationDescriptorFactory {
     /** {@inheritDoc} */
     public ReservationDescriptor getDescriptor(
             final String connectionName,
-            final String filter, final PermissionCallback permissionCallback)
+            final String filter, final AccessControlContext context)
                 throws IllegalArgumentException, ConnectionNotFoundException {
         final ConnectionName cn = ConnectionName.parse(connectionName);
         final ProtocolFactory pf = protocolRegistry.get(cn.protocol);
@@ -60,6 +61,6 @@ public final class RDFactory implements ReservationDescriptorFactory {
         }
 
         return pf.createDescriptor(cn.protocol, cn.targetAndParams, filter,
-                permissionCallback);
+                context);
     }
 }

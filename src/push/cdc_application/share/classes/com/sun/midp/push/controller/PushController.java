@@ -25,8 +25,8 @@
 package com.sun.midp.push.controller;
 
 import com.sun.midp.push.persistence.Store;
-import com.sun.midp.push.gcf.ReservationDescriptor;
-import com.sun.midp.push.gcf.ReservationDescriptorFactory;
+import com.sun.midp.push.reservation.ReservationDescriptor;
+import com.sun.midp.push.reservation.impl.ReservationDescriptorFactory;
 import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
 

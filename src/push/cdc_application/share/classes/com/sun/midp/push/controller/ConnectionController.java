@@ -24,12 +24,13 @@
 
 package com.sun.midp.push.controller;
 
-import com.sun.midp.push.gcf.ConnectionReservation;
-import com.sun.midp.push.gcf.DataAvailableListener;
-import com.sun.midp.push.gcf.ReservationDescriptor;
+import com.sun.midp.push.reservation.ConnectionReservation;
+import com.sun.midp.push.reservation.DataAvailableListener;
+import com.sun.midp.push.reservation.ReservationDescriptor;
 import com.sun.midp.push.persistence.Store;
-import com.sun.midp.push.gcf.PermissionCallback;
-import com.sun.midp.push.gcf.ReservationDescriptorFactory;
+import com.sun.midp.push.reservation.impl.ReservationDescriptorFactory;
+import com.sun.j2me.security.AccessControlContext;
+import com.sun.j2me.security.AccessControlContextAdapter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -339,17 +340,15 @@ final class ConnectionController {
     }
 
     /**
-     * Noop permission callback for startup connection reservation.
+     * Noop permission checker for startup connection reservation.
      *
      * IMPL_NOTE: hopefully will go away when we'll get rid of
      * reservationDescriptorFactory
      */
-    private final PermissionCallback noopPermissionCallback =
-            new PermissionCallback() {
-        public void checkForPermission(
-                final String permissionName,
-                final String resource,
-                final String extraValue) throws SecurityException { }
+    private final AccessControlContext noopAccessControlContext =
+            new AccessControlContextAdapter() {
+        public void checkPermissionImpl(
+                        String name, String resource, String extraValue) {}
     };
 
     /**
@@ -373,7 +372,7 @@ final class ConnectionController {
                         registerConnection(suiteId, info.midlet,
                                 reservationDescriptorFactory.getDescriptor(
                                     info.connection, info.filter,
-                                    noopPermissionCallback));
+                                    noopAccessControlContext));
                     } catch (ConnectionNotFoundException cnfe) {
                         logError("failed to register " + info + ": " + cnfe);
                     } catch (IOException ioex) {

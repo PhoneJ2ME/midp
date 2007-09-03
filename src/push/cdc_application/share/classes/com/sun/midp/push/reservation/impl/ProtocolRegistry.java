@@ -22,7 +22,10 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf.impl;
+package com.sun.midp.push.reservation.impl;
+
+import com.sun.midp.push.reservation.ProtocolFactory;
+
 
 /**
  * Registry mapping protocol to instances of <code>ProtocolRegistry</code>.

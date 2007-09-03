@@ -25,8 +25,11 @@
 package com.sun.midp.push.controller;
 
 import com.sun.midp.push.ota.InstallerInterface;
-import com.sun.midp.push.gcf.PermissionCallback;
-import com.sun.midp.push.gcf.ReservationDescriptorFactory;
+import com.sun.midp.push.reservation.impl.ReservationDescriptorFactory;
+
+import com.sun.j2me.security.AccessControlContext;
+import com.sun.j2me.security.AccessControlContextAdapter;
+
 import java.io.IOException;
 import javax.microedition.io.ConnectionNotFoundException;
 
@@ -57,12 +60,12 @@ public final class InstallerInterfaceImpl implements InstallerInterface {
             final ConnectionInfo [] connections)
                 throws  ConnectionNotFoundException, IOException,
                         SecurityException {
-        final PermissionCallback permissionCallback = new PermissionCallback() {
-            public void checkForPermission(
+        final AccessControlContext context = new AccessControlContextAdapter() {
+            public void checkPermissionImpl(
                     final String permissionName,
                     final String resource,
-                    final String extraValue) {
-                checkPermission(
+                    final String extraValue) throws SecurityException {
+                InstallerInterfaceImpl.this.checkPermission(
                         midletSuiteId, permissionName, resource, extraValue);
             }
         };
@@ -75,7 +78,7 @@ public final class InstallerInterfaceImpl implements InstallerInterface {
                         midletSuiteId, ci.midlet,
                         reservationDescriptorFactory.getDescriptor(
                             ci.connection, ci.filter,
-                            permissionCallback));
+                            context));
             } catch (IOException ioex) {
                 // NB: ConnectionNotFoundException is subclass of IOException
                 // Quick'n'simple
@@ -99,7 +102,8 @@ public final class InstallerInterfaceImpl implements InstallerInterface {
      *
      * @param midletSuiteId <code>MIDlet</code> suite id
      */
-    private void checkPushPermission(final int midletSuiteId) {
+    private void checkPushPermission(final int midletSuiteId) 
+                    throws SecurityException {
         // TBD: implement
     }
 
@@ -114,7 +118,8 @@ public final class InstallerInterfaceImpl implements InstallerInterface {
     private void checkPermission(
             final int midletSuiteId,
             final String permissionName,
-            final String resource, final String extraValue) {
+            final String resource, final String extraValue) 
+                throws SecurityException {
         // TBD: implement
     }
 }

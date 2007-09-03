@@ -22,10 +22,9 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf.impl;
+package com.sun.midp.push.reservation;
 
-import com.sun.midp.push.gcf.PermissionCallback;
-import com.sun.midp.push.gcf.ReservationDescriptor;
+import com.sun.j2me.security.AccessControlContext;
 
 /**
  * Abstraction for protocol-specific
@@ -38,7 +37,7 @@ public interface ProtocolFactory {
      * @param protocol connection protocol (all lowercase)
      * @param targetAndParams reminder of connection string
      * @param filter filter
-     * @param permissionCallback permission callback to check protocol-specific
+     * @param context object to check protocol-specific
      *  permissions (cannot be <code>null</code>)
      *
      * @return <code>ReservationDescriptor</code> (cannot be <code>null</code>)
@@ -49,6 +48,6 @@ public interface ProtocolFactory {
      */
     ReservationDescriptor createDescriptor(
             String protocol, String targetAndParams, String filter,
-            PermissionCallback permissionCallback)
+            AccessControlContext context)
         throws IllegalArgumentException, SecurityException;
 }

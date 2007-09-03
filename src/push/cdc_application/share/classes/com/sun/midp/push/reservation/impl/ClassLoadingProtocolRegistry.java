@@ -22,7 +22,10 @@
  * information or have any questions.
  */
 
-package com.sun.midp.push.gcf.impl;
+package com.sun.midp.push.reservation.impl;
+
+import com.sun.midp.push.reservation.ProtocolFactory;
+
 
 /** Class loading implementation of <code>ProtocolRegistry</code>. */
 public final class ClassLoadingProtocolRegistry implements ProtocolRegistry {
