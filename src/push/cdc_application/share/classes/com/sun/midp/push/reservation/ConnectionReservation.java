@@ -36,9 +36,12 @@ package com.sun.midp.push.reservation;
  */
 public interface ConnectionReservation {
     /**
-     * Checks if the reservation has available data.
+     * Checks if the reservation has available data. 
+     * Implementation should be nonblocking. This method is used to get 
+     * snapshot of the <code>ConnectionReservation</code> if it has available
+     * data to read or not.
      *
-     * @return <code>true</code> iff there are available data
+     * @return <code>true</code> if there is available data
      *
      * @throws IllegalStateException if invoked after reservation cancellation
      */
