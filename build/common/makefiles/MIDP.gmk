@@ -151,6 +151,7 @@ $(MIDP_CLASSES_ZIP)::$(GENERATED_JAVA_FILES) \
 	$(compilefiles)
 	$(remove_filelist)
 	$(remove_genfilelist)
+	$(split_midpclasses_zip)
 
 try_build_classes:: $(MIDP_CLASSES_ZIP)
 
