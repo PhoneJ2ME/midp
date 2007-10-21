@@ -26,13 +26,28 @@
 
 package com.sun.midp.io.j2me.serversocket;
 
+import com.sun.j2me.security.AccessController;
+
 public class Protocol extends com.sun.cdc.io.j2me.serversocket.Protocol {
 
-    /*
-     * throws SecurityException if MIDP permission check fails 
-    */
-    protected void checkMIDPPermission(int port) {
-        //The actual MIDP permission check happens here
-    }
+    private static final String SERVER_PERMISSION_NAME =
+        "javax.microedition.io.Connector.serversocket";
 
+    /**
+     * Check to see if the application has permission to use
+     * the given resource.
+     *
+     * @param port the port number to use.
+     *
+     * @exception SecurityException if the MIDP permission
+     *            check fails.
+     */
+    protected void checkMIDPPermission(int port) throws SecurityException {
+	if (port < 0) {
+	    throw new IllegalArgumentException("bad port: " + port);
+	}
+        AccessController.checkPermission(SERVER_PERMISSION_NAME,
+                                         "TCP Server" + port);
+        return;
+    }
 }
