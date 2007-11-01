@@ -93,7 +93,27 @@ public class FileInstaller extends Installer {
 
         // Open source (jar) file
         jarInputStream = new RandomAccessStream();
-        jarInputStream.connect(jarFilename, Connector.READ);
+        
+        try {
+            jarInputStream.connect(jarFilename, Connector.READ);
+        } catch (java.io.IOException ioe) {
+            // if JAR file was not found, it migth have relative path,
+            // try to use absolute path based on JAD file path
+            if (info.jadUrl != null) {
+                String temp = 
+                    info.jadUrl.substring(0, info.jadUrl.lastIndexOf('/') + 1);
+            
+                if (temp == null || temp.length() == 0) {
+                    temp = info.jadUrl.substring(0, info.jadUrl.lastIndexOf(
+                        java.io.File.separatorChar) + 1);
+                }
+            
+                jarFilename = temp + jarFilename;
+                jarInputStream.connect(jarFilename, Connector.READ);
+            } else {
+                throw new java.io.IOException(ioe.getMessage());
+            }
+        }
 
         // Open destination (temporary) file
         jarOutputStream = new RandomAccessStream();
