@@ -59,7 +59,7 @@ KNIDECL(com_sun_midp_jump_JumpInit_initMidpStorage) {
     cbuff[len] = 0;
 
     midpSetHomeDir(cbuff);
-    err = storageInitialize(cbuff);
+    err = storageInitialize(cbuff, cbuff);
 
     if (err == 0) {
          status = midp_suite_storage_init();
