@@ -76,3 +76,4 @@ KNIDECL(com_sun_midp_jump_JumpInit_initMidpStorage) {
     }
 }
 
+

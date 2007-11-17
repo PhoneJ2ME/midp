@@ -885,3 +885,4 @@ storage_write_utf16_string(char** ppszError, int handle, const pcsl_string* str)
   }
 }
 
+
