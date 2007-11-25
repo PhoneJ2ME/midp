@@ -49,7 +49,7 @@ public class Protocol extends com.sun.cdc.io.j2me.datagram.Protocol {
      * @exception SecurityException if the MIDP permission
      *            check fails
      */
-    protected void checkMIDPPermission(String host, int port) 
+    protected void checkPermission(String host, int port) 
         throws SecurityException {
 
         // If hostname is specified, we must have a valid port.
@@ -77,7 +77,7 @@ public class Protocol extends com.sun.cdc.io.j2me.datagram.Protocol {
     }
 
     /**
-     * A convenience constructor for creating a connection
+     * A convenience method for creating a connection
      * where the port is allocated by the system.
      *
      * @param host the name of the host to contact. Can be
@@ -87,8 +87,26 @@ public class Protocol extends com.sun.cdc.io.j2me.datagram.Protocol {
      * @exception SecurityException if the MIDP permission
      *            check fails
      */
-    protected void checkMIDPPermission(String host)
+    protected void checkPermission(String host)
         throws SecurityException {
-        checkMIDPPermission(host, 0);
+        checkPermission(host, 0);
+	return;
     }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void outputStreamPermissionCheck() {
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void inputStreamPermissionCheck() {
+        return;
+    }
+
 }

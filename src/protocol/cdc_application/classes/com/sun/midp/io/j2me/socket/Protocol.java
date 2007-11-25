@@ -96,8 +96,8 @@ public class Protocol extends com.sun.cdc.io.j2me.socket.Protocol {
      * @exception SecurityException if the MIDP permission
      *            check fails.
      */
-     protected void checkMIDPPermission(String host, int port)
-        throws SecurityException {
+    protected void checkPermission(String host, int port)
+        throws SecurityException{
 
         if (port < 0) {
             throw new IllegalArgumentException("bad port: " + port);
@@ -109,6 +109,22 @@ public class Protocol extends com.sun.cdc.io.j2me.socket.Protocol {
 	    AccessController.checkPermission(CLIENT_PERMISSION_NAME,
                                          "TCP" + ":" + host + ":" + port);
 	}
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void outputStreamPermissionCheck() {
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void inputStreamPermissionCheck() {
         return;
     }
 

@@ -108,25 +108,42 @@ public class Protocol extends com.sun.cdc.io.j2me.http.Protocol {
      * Check to see if the application has permission to use
      * the given resource.
      *
-     * @param url a URL to which to connect.
+     * @param url the URL to which to connect
      *
      * @exception SecurityException if the MIDP permission
      *            check fails.
      */
-     protected void checkMIDPPermission(String url) throws SecurityException {
+    protected void checkPermission(String url) throws SecurityException {
         URL u = null;
         try {
             u = new URL(url);
         } catch (MalformedURLException mfue) {
-            throw new IllegalArgumentException("bad url: " + url);
+            throw new IllegalArgumentException("bad URL: " + url);
         }
         int port = u.getPort();
-	if (port < 0) {
-	    port = u.getDefaultPort();
-	}
+        if (port < 0) {
+            port = u.getDefaultPort();
+        }
         AccessController.checkPermission(HTTP_PERMISSION_NAME,
                                          u.getHost() + ":" +
                                          port + "/" + u.getFile());
         return;
     }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void outputStreamPermissionCheck() {
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void inputStreamPermissionCheck() {
+        return;
+    }
+
 }

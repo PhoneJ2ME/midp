@@ -108,26 +108,37 @@ public class Protocol extends com.sun.cdc.io.j2me.ssl.Protocol {
      * Check to see if the application has permission to use
      * the given resource.
      *
-     * @param url a URL to which to connect.
+     * @param host the host to contact
+     * @param port the port to use
+     * @param file the filename portion of the URL, possibly
+     *        the empty string
      *
      * @exception SecurityException if the MIDP permission
      *            check fails.
      */
-    protected void checkMIDPPermission(String url) throws SecurityException {
-        URL u = null;
-        try {
-            u = new URL(url);
-        } catch (MalformedURLException mfue) {
-            throw new IllegalArgumentException("bad url: " + url);
-        }
-        int port = u.getPort();
-        if (port < 0) {
-            port = u.getDefaultPort();
-        }
+    protected void checkPermission(String host, int port, String file)
+        throws SecurityException {
         AccessController.checkPermission(SSL_PERMISSION_NAME,
-                                         u.getHost() + ":" +
-                                         port + "/" + u.getFile());
+                                         host + ":" +
+                                         port + "/" + file);
         return;
     }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void outputStreamPermissionCheck() {
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void inputStreamPermissionCheck() {
+        return;
+    }
+
 }
  

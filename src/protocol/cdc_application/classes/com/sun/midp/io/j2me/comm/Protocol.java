@@ -41,8 +41,25 @@ public class Protocol extends com.sun.cdc.io.j2me.comm.Protocol {
      * @exception SecurityException if the MIDP permission
      *            check fails
      */
-    protected void checkMIDPPermission(String name) throws SecurityException {
+    protected void checkPermission(String name) throws SecurityException {
         AccessController.checkPermission(COMM_PERMISSION_NAME, name);
         return;
     }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void outputStreamPermissionCheck() {
+        return;
+    }
+
+    /*
+     * For MIDP version of the protocol handler, only a single
+     * check on open is required.
+     */
+    protected void inputStreamPermissionCheck() {
+        return;
+    }
+
 }
