@@ -61,7 +61,7 @@ extern int appManagerRequestWaiting;
  * Main window class name.
  * Shared by NAMS testing program to post test events.
  */
-#define MAIN_WINDOW_CLASS_NAME "SunCDC-HI/MIDP"
+#define MAIN_WINDOW_CLASS_NAME "Sun - Titan EMU"
 
 /**
  * @name Main Window Event Types
