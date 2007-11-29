@@ -113,20 +113,11 @@ public class Protocol extends com.sun.cdc.io.j2me.http.Protocol {
      * @exception SecurityException if the MIDP permission
      *            check fails.
      */
-    protected void checkPermission(String url) throws SecurityException {
-        URL u = null;
-        try {
-            u = new URL(url);
-        } catch (MalformedURLException mfue) {
-            throw new IllegalArgumentException("bad URL: " + url);
-        }
-        int port = u.getPort();
-        if (port < 0) {
-            port = u.getDefaultPort();
-        }
+    protected void checkPermission(String host, int port, String file) 
+        throws SecurityException {
         AccessController.checkPermission(HTTP_PERMISSION_NAME,
-                                         u.getHost() + ":" +
-                                         port + "/" + u.getFile());
+                                         host + ":" +
+                                         port + file);
         return;
     }
 

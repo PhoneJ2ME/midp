@@ -120,7 +120,7 @@ public class Protocol extends com.sun.cdc.io.j2me.ssl.Protocol {
         throws SecurityException {
         AccessController.checkPermission(SSL_PERMISSION_NAME,
                                          host + ":" +
-                                         port + "/" + file);
+                                         port +  file);
         return;
     }
 

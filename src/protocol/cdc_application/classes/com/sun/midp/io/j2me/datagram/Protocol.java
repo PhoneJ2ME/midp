@@ -31,7 +31,7 @@ import com.sun.j2me.security.AccessController;
 public class Protocol extends com.sun.cdc.io.j2me.datagram.Protocol {
 
     private static final String SERVER_PERMISSION_NAME =
-        "javax.microeditiion.io.Connector.datagramreceiver";
+        "javax.microedition.io.Connector.datagramreceiver";
 
     private static final String CLIENT_PERMISSION_NAME =
         "javax.microedition.io.Connector.datagram";
