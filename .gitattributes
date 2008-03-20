@@ -23,6 +23,7 @@ src/ams/appmanager_ui_resources/linux_qte/platform/alert.image_icon_info.png svn
 src/ams/appmanager_ui_resources/linux_qte/platform/alert.image_icon_warn.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_qte/platform/splash_screen_166x176.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/linux_qte/platform/splash_screen_176x166.png svn_mime_002dtype=application%2Foctet-stream
+src/ams/appmanager_ui_resources/share/Folder.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_disabled.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_fg_requested.png svn_mime_002dtype=application%2Foctet-stream
 src/ams/appmanager_ui_resources/share/_ch_hilight_bg.png svn_mime_002dtype=application%2Foctet-stream
