@@ -123,6 +123,7 @@ src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_ampm.png svn_mime_00
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_cal_bg.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_clock_bg.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_dates.png svn_mime_002dtype=application%2Foctet-stream
+src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_days.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_mon_bg.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_radio0.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_radio1.png svn_mime_002dtype=application%2Foctet-stream
