@@ -125,10 +125,13 @@ src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_clock_bg.png svn_mim
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_dates.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_days.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_mon_bg.png svn_mime_002dtype=application%2Foctet-stream
+src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_mon_he_bg.PNG svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_radio0.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_radio1.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_time_bg.png svn_mime_002dtype=application%2Foctet-stream
+src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_time_he_bg.PNG svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_yr_bg.png svn_mime_002dtype=application%2Foctet-stream
+src/highlevelui/lcdlf/lfjava/resource/skin/dateeditor.image_yr_he_bg.PNG svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/datefield.image_btn_bg0.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/datefield.image_btn_bg1.png svn_mime_002dtype=application%2Foctet-stream
 src/highlevelui/lcdlf/lfjava/resource/skin/datefield.image_btn_bg2.png svn_mime_002dtype=application%2Foctet-stream
