@@ -481,6 +481,7 @@ src/security/pki/reference/classes/javax/microedition/pki/package.html svn_mime_
 src/security/publickeystore/reference/classes/com/sun/midp/publickeystore/package.html svn_mime_002dtype=text%2Fhtml
 src/tool/jadtool/classes/com/sun/midp/jadtool/doc-files/jadtool.html svn_mime_002dtype=text%2Fhtml
 src/tool/jadtool/classes/com/sun/midp/jadtool/package.html svn_mime_002dtype=text%2Fhtml
+src/tool/mekeytool/classes/com/sun/midp/mekeytool/3rdparty.ks svn_mime_002dtype=application%2Foctet-stream
 src/tool/mekeytool/classes/com/sun/midp/mekeytool/doc-files/mekeytool.html svn_mime_002dtype=text%2Fhtml
 src/tool/mekeytool/classes/com/sun/midp/mekeytool/j2se_test_keystore.bin svn_mime_002dtype=application%2Foctet-stream
 src/tool/mekeytool/classes/com/sun/midp/mekeytool/package.html svn_mime_002dtype=text%2Fhtml
