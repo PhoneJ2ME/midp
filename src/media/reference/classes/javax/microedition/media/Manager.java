@@ -642,5 +642,9 @@ public final class Manager {
         if (note < 0 || note > 127 || duration <= 0) {
             throw new IllegalArgumentException("bad param");
         }
+	
+	playTone0(note, duration, volume);
     }
+    
+    private static native boolean playTone0(int note, int duration, int volume);
 }

@@ -37,6 +37,9 @@ import com.sun.midp.lcdui.*;
 import com.sun.midp.midlet.*;
 import com.sun.midp.midletsuite.*;
 import com.sun.midp.security.*;
+import com.sun.midp.util.Properties;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * The first class loaded in VM by midp_run_midlet_with_args to initialize
@@ -51,6 +54,31 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
 
     /** Holds the ID of the current display, for preempting purposes. */
     protected int currentDisplayId;
+
+    /** Holds the properties of the Manifest and the JAD file of a MIDlet */
+    protected static Properties properties = new Properties();
+
+    /**
+     * Called at the initial start of the VM for a MIDlet with properties.
+     * Initializes the properties specified in the manifest and the jad file
+     * before invoking the main method.
+     *
+     * @param args the MIDlet args for main()
+     * @param entries the MIDlet properties
+     */
+    public static void launchUninstalledSuite(String args[], HashMap entries) {
+        properties = new Properties();
+        Iterator keys = entries.keySet().iterator();
+        while (keys.hasNext()) {
+            String key = (String)keys.next();
+            properties.setProperty(key, (String)(entries.get(key)));
+        }
+
+        // A midlet has always a manifest with mandatory properties. The main()
+        // method should never be invoked directly for running an uninstalled
+        // suite, even if no JAD file is specified.
+        main(args);
+    }
 
     /**
      * Called at the initial start of the VM.
@@ -172,7 +200,7 @@ public class CdcMIDletSuiteLoader extends AbstractMIDletSuiteLoader
 
         if (suiteId == MIDletSuite.INTERNAL_SUITE_ID) {
             // assume a class name of a MIDlet in the classpath
-            suite = InternalMIDletSuiteImpl.create(midletDisplayName, suiteId);
+            suite = InternalMIDletSuiteImpl.create(midletDisplayName, suiteId, properties);
         } else {
             storage = MIDletSuiteStorage.
                 getMIDletSuiteStorage(internalSecurityToken);

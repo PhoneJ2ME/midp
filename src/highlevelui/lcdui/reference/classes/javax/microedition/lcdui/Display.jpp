@@ -1946,6 +1946,7 @@ public class Display {
                 return false;
             }
             return true;
+
 // #else
             Class managerClass = null;
             Class toneControlClass = null;
@@ -1965,6 +1966,9 @@ public class Display {
             } catch (IllegalArgumentException iare) {
             } catch (IllegalAccessException iace) {
 	    } 
+
+    	    playTone0(60 + note, duration, volume);
+    	    return true;
 
 // #endif ENABLE_CDC
         }
@@ -2446,7 +2450,6 @@ public class Display {
 
     static native int getScreenHeight0();
 
-// #ifdef ENABLE_CDC
     /**
      * Play an Alert sound.
      *
@@ -2456,8 +2459,7 @@ public class Display {
      * @return <code>true</code>, if sound was played.
      */
     private native boolean playAlertSound0(int displayId, int alertType);
-// #endif ENABLE_CDC
-
+    private native boolean playTone0(int note, int duration, int volume);
 
     /**
      * Sets full screen on the device.
