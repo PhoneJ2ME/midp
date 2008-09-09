@@ -49,6 +49,7 @@ src/ams/example/nams_ui/javacall/res/permission_allow.ico svn_mime_002dtype=appl
 src/ams/example/nams_ui/javacall/res/permission_deny.ico svn_mime_002dtype=application%2Foctet-stream
 src/ams/example/nams_ui/javacall/res/permission_oneshot.ico svn_mime_002dtype=application%2Foctet-stream
 src/ams/example/nams_ui/javacall/res/permission_session.ico svn_mime_002dtype=application%2Foctet-stream
+src/ams/example/nams_ui/javacall/res/splash_screen_240x320.bmp svn_mime_002dtype=application%2Foctet-stream
 src/ams/example/nams_ui/javacall/res/suite.ico svn_mime_002dtype=application%2Foctet-stream
 src/ams/example/nams_ui/javacall/res/toolbar.bmp svn_mime_002dtype=application%2Foctet-stream
 src/ams/installer/reference/classes/com/sun/midp/installer/doc-files/at-seq.gif svn_mime_002dtype=application%2Foctet-stream
