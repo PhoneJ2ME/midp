@@ -52,6 +52,7 @@ src/ams/suitestore/internal_api/classes/com/sun/midp/midletsuite/package.html sv
 src/ams/suitestore/internal_api/reference/classes/com/sun/midp/midletsuite/doc-files/midletsuitestorage.gif svn_mime_002dtype=application%2Foctet-stream
 src/ams/suitestore/internal_api/reference/classes/com/sun/midp/midletsuite/package.html svn_mime_002dtype=text%2Fhtml
 src/automation/classes/com/sun/midp/automation/package.html svn_mime_002dtype=text%2Fhtml
+src/automation/mvm/classes/com/sun/midp/automation/package.html svn_mime_002dtype=text%2Fhtml
 src/core/javautil/classes/java/lang/package.html svn_mime_002dtype=text%2Fhtml
 src/core/javautil/classes/java/util/package.html svn_mime_002dtype=text%2Fhtml
 src/core/javautil/reference/classes/com/sun/midp/util/package.html svn_mime_002dtype=text%2Fhtml
