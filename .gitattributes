@@ -497,8 +497,8 @@ src/push/cdc_application/jump/classes/com/sun/midp/jump/push/share/package.html 
 src/push/cdc_application/share/classes/com/sun/midp/push/controller/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/share/classes/com/sun/midp/push/ota/package.html svn_mime_002dtype=text%2Fhtml
 src/push/cdc_application/share/classes/com/sun/midp/push/persistence/package.html svn_mime_002dtype=text%2Fhtml
-src/push/cdc_application/share/classes/com/sun/midp/push/reservation/package.html svn_mime_002dtype=text%2Fhtml
 src/push/push_api/cdc_application/classes/com/sun/midp/io/j2me/push/package.html svn_mime_002dtype=text%2Fhtml
+src/push/push_api/cdc_application/classes/com/sun/midp/push/reservation/package.html svn_mime_002dtype=text%2Fhtml
 src/push/push_api/javapush/classes/com/sun/midp/io/j2me/push/package.html svn_mime_002dtype=text%2Fhtml
 src/push/push_api/jump_application/classes/com/sun/midp/io/j2me/push/package.html svn_mime_002dtype=text%2Fhtml
 src/rms/rms_api/classes/javax/microedition/rms/package.html svn_mime_002dtype=text%2Fhtml
