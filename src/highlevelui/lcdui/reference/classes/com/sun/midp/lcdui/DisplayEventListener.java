@@ -78,6 +78,8 @@ public class DisplayEventListener implements EventListener {
         eventQueue.registerEventListener(EventTypes.COMMAND_EVENT, this);
         eventQueue.registerEventListener(EventTypes.PEER_CHANGED_EVENT, this);
         eventQueue.registerEventListener(EventTypes.ROTATION_EVENT,this);
+        eventQueue.registerEventListener(EventTypes.VIRTUAL_KEYBOARD_EVENT,this);
+        eventQueue.registerEventListener(EventTypes.CHANGE_LOCALE_EVENT,this);
     }
 
     /**
@@ -155,6 +157,13 @@ public class DisplayEventListener implements EventListener {
                 dc.handleRotationEvent();
                 return;
 
+            case EventTypes.VIRTUAL_KEYBOARD_EVENT:
+                dc.handleVirtualKeyboardEvent();
+                return;
+			
+            case EventTypes.CHANGE_LOCALE_EVENT:
+                dc.handleChangeLocaleEvent();
+                return;
             default:
                 if (Logging.REPORT_LEVEL <= Logging.WARNING) {
                     Logging.report(Logging.WARNING, LogChannels.LC_CORE,

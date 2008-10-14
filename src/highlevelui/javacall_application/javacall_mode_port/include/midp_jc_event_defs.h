@@ -110,6 +110,7 @@ typedef enum {
     MIDP_JC_EVENT_MULTIMEDIA           ,
     MIDP_JC_EVENT_PAUSE                ,
     MIDP_JC_EVENT_RESUME               ,
+    MIDP_JC_EVENT_CHANGE_LOCALE		   ,
     MIDP_JC_EVENT_INTERNAL_PAUSE       ,
     MIDP_JC_EVENT_INTERNAL_RESUME      ,
     MIDP_JC_EVENT_TEXTFIELD            ,
@@ -304,18 +305,18 @@ typedef struct {
 
 #ifdef ENABLE_JSR_256
 typedef struct {
-    javacall_sensor_type sensor_type;
+    int sensor_type;
     javacall_bool is_available;
 } jsr256_jc_event_sensor_available;
 
 typedef struct {
-    javacall_sensor_type sensor;
+    int sensor;
     javacall_bool isOpen;
     int errCode;
 } jsr256_jc_event_sensor_t;
 
 typedef struct {
-    javacall_sensor_type sensor;
+    int sensor;
     int channel;
     int errCode;
 } jsr256_jc_event_sensor_data_ready_t;

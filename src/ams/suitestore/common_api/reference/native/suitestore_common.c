@@ -36,6 +36,8 @@
 #include <string.h>
 #include <kni.h>
 #include <pcsl_memory.h>
+#include <pcsl_esc.h>
+#include <pcsl_string.h>
 #include <midpInit.h>
 #include <suitestore_common.h>
 
@@ -408,8 +410,8 @@ midp_suite_get_cached_resource_filename(SuiteIdType suiteId,
         pcsl_string_predict_size(&resourceFileName, fileNameLen);
 
         if ( /* Convert any slashes */
-            pcsl_string_append_escaped_ascii(&resourceFileName,
-                pResourceName) != PCSL_STRING_OK ||
+            pcsl_esc_attach_string(pResourceName,
+                &resourceFileName) != PCSL_STRING_OK ||
             /* Add the extension */
             pcsl_string_append(&resourceFileName, &TMP_EXT) !=
                 PCSL_STRING_OK) {
@@ -693,6 +695,56 @@ midp_get_suite_properties(SuiteIdType suiteId) {
 
     return result;
 }
+
+/**
+ * Retrieves the specified property value of the suite.
+ *
+ * IMPL_NOTE: this functions is introduced instead of 3 functions above.
+ *
+ * @param suiteId [in]  unique ID of the MIDlet suite
+ * @param pKey    [in]  property name
+ * @param pValue  [out] buffer to conatain returned property value
+ *
+ * @return ALL_OK if no errors,
+ *         BAD_PARAMS if some parameter is invalid,
+ *         NOT_FOUND if suite was not found,
+ *         SUITE_CORRUPTED_ERROR if the suite is corrupted
+ */
+MIDPError
+midp_get_suite_property(SuiteIdType suiteId,
+                        const pcsl_string* pKey,
+                        pcsl_string* pValue) {
+    MidpProperties prop;
+    pcsl_string* pPropFound;
+
+    if (pKey == NULL || pValue == NULL) {
+        return BAD_PARAMS;
+    }
+
+    (void)suiteId;
+    (void)pKey;
+
+    *pValue = PCSL_STRING_NULL;
+
+    /* IMPL_NOTE: the following implementation should be optimized! */
+    prop = midp_get_suite_properties(suiteId);
+    if (prop.status != ALL_OK) {
+        return prop.status;
+    }
+
+    pPropFound = midp_find_property(&prop, pKey);
+// TODO !!!
+//    midp_free_properties(&prop);
+
+    if (pPropFound == NULL) {
+        return NOT_FOUND;
+    }
+
+    *pValue = *pPropFound;
+
+    return ALL_OK;                        
+}
+
 
 /* ------------------------------------------------------------ */
 /*                          Implementation                      */

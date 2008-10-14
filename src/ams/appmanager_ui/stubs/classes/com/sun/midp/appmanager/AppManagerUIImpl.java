@@ -97,8 +97,9 @@ class AppManagerUIImpl implements AppManagerUI {
      * Called when a new midlet was launched.
      *
      * @param si corresponding midlet suite info
+     * @param className MIDlet class name
      */
-    public void notifyMidletStarted(RunningMIDletSuiteInfo si) {
+    public void notifyMidletStarted(RunningMIDletSuiteInfo si, String className) {
 
     }
 
@@ -106,8 +107,9 @@ class AppManagerUIImpl implements AppManagerUI {
      * Called when state of a running midlet has changed.
      *
      * @param si corresponding midlet suite info
+     * @param midlet
      */
-    public void notifyMidletStateChanged(RunningMIDletSuiteInfo si) {
+    public void notifyMidletStateChanged(RunningMIDletSuiteInfo si, MIDletProxy midlet) {
 
     }
 
@@ -125,7 +127,7 @@ class AppManagerUIImpl implements AppManagerUI {
      * @param midletClassName Class name of the exited midlet
      */
     public void notifyMidletExited(RunningMIDletSuiteInfo si, 
-            String midletClassname) {
+            String midletClassName) {
 
     }
 
@@ -146,6 +148,15 @@ class AppManagerUIImpl implements AppManagerUI {
      */
     public void notifySuiteInstalledExt(RunningMIDletSuiteInfo si) {
 
+    }
+
+    /**
+     * Called when a suite exited (the only MIDlet in suite exited or the
+     * MIDlet selector exited).
+     *
+     * @param suiteInfo Suite which just exited
+     */
+    public void notifySuiteExited(RunningMIDletSuiteInfo suiteInfo) {
     }
 
     /**
@@ -182,6 +193,17 @@ class AppManagerUIImpl implements AppManagerUI {
      */
     public void notifyMidletStartError(int suiteId, String className, int errorCode,
                                 String errorDetails) {
+
+    }
+
+    /**
+     * Called when state of the midlet changes.
+     *
+     * @param si corresponding suite info
+     * @param newSi new suite info
+     */
+    public void notifyMIDletSuiteStateChanged(RunningMIDletSuiteInfo si,
+                                             RunningMIDletSuiteInfo newSi) {
 
     }
 

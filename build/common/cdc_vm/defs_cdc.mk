@@ -31,12 +31,12 @@ MIDP_CNI_CLASSES += \
         com.sun.midp.appmanager.MIDletSuiteInfo \
         com.sun.midp.chameleon.input.InputModeFactory \
         com.sun.midp.chameleon.input.NativeInputMode \
-        com.sun.midp.chameleon.input.VirtualInputMode \
+        com.sun.midp.chameleon.input.VirtualKeyboardInputMode \
         com.sun.midp.chameleon.layers.SoftButtonLayer \
         com.sun.midp.chameleon.skins.resources.LoadedSkinData \
         com.sun.midp.chameleon.skins.resources.LoadedSkinProperties \
         com.sun.midp.chameleon.skins.resources.LoadedSkinResources \
-        com.sun.midp.chameleon.skins.resources.SkinResources \
+        com.sun.midp.chameleon.skins.resources.SkinResourcesImpl \
         com.sun.midp.crypto.MD2 \
         com.sun.midp.crypto.MD5 \
         com.sun.midp.crypto.SHA \
@@ -70,6 +70,7 @@ MIDP_CNI_CLASSES += \
         javax.microedition.lcdui.ImageData \
         javax.microedition.lcdui.ImageDataFactory \
         javax.microedition.lcdui.KeyConverter \
+        javax.microedition.lcdui.SuiteImageCacheImpl \
         com.sun.midp.util.ResourceHandler \
         com.sun.midp.security.Permissions
 

@@ -55,6 +55,7 @@ extern "C" {
 typedef enum midp_SignalType {
     NO_SIGNAL,
     UI_SIGNAL,
+    INSTALLER_UI_SIGNAL,
     NETWORK_READ_SIGNAL,
     NETWORK_WRITE_SIGNAL,
     NETWORK_EXCEPTION_SIGNAL,
@@ -86,7 +87,6 @@ typedef enum midp_SignalType {
     LINK_PORTAL_SIGNAL,
     JSR179_LOCATION_SIGNAL,
     MEDIA_EVENT_SIGNAL,
-    MEDIA_SNAPSHOT_SIGNAL,  /* sent when snapshot acquisition is complete */
     JSR256_SIGNAL,
     VOLUME_SIGNAL,
     JSR290_LOAD_FINISH_SIGNAL,
