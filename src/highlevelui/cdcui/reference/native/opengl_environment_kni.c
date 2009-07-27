@@ -261,12 +261,27 @@ KNIDECL(com_sun_midp_lcdui_OpenGLEnvironment_getDrawingSurface0) {
 
 KNIEXPORT KNI_RETURNTYPE_VOID
 KNIDECL(com_sun_midp_lcdui_OpenGLEnvironment_initMidpGL) {
+    static jfieldID pixel_size_fid;
 
     jint displayWidth = KNI_GetParameterAsInt(1);
     jint displayHeight = KNI_GetParameterAsInt(2);
 
 #if ENABLE_DYNAMIC_PIXEL_FORMAT
     jcapp_switch_color_depth(1);
+    // reset pixel size in java ImageData
+    KNI_StartHandles(1);
+    KNI_DeclareHandle(imageDataHandle);
+    KNI_FindClass("javax/microedition/lcdui/ImageData",
+                   imageDataHandle);
+    if (imageDataHandle != NULL) {
+        pixel_size_fid = KNI_GetStaticFieldID(imageDataHandle, "sizeOfPixel",
+                                              "I");
+        if (pixel_size_fid != NULL) {
+BREWprintf("resetting pixel size to 4\n");
+            KNI_SetStaticIntField(imageDataHandle, pixel_size_fid, 4);
+        }
+    }
+    KNI_EndHandles();
 #endif
 
     midpGL_init(displayWidth, displayHeight);
@@ -299,10 +314,27 @@ KNIDECL(com_sun_midp_lcdui_OpenGLEnvironment_lowerOpenGL0) {
 
 KNIEXPORT KNI_RETURNTYPE_VOID
 KNIDECL(com_sun_midp_lcdui_OpenGLEnvironment_switchColorDepth0) {
+    static jfieldID pixel_size_fid;
+
     jint param = KNI_GetParameterAsInt(1);
+    jint size = param?4:2;
 #if ENABLE_DYNAMIC_PIXEL_FORMAT
 BREWprintf("calling switchColorDepth with %d\n", param);
     jcapp_switch_color_depth(param);
+    // reset pixel size in java ImageDataFactory
+    KNI_StartHandles(1);
+    KNI_DeclareHandle(imageDataHandle);
+    KNI_FindClass("javax/microedition/lcdui/ImageData",
+                   imageDataHandle);
+    if (imageDataHandle != NULL) {
+        pixel_size_fid = KNI_GetStaticFieldID(imageDataHandle, "sizeOfPixel",
+                                        "I");
+        if (pixel_size_fid != NULL) {
+BREWprintf("resetting pixel size to %d\n", size);
+            KNI_SetStaticIntField(imageDataHandle, pixel_size_fid, size);
+        }
+    }
+    KNI_EndHandles();
 #endif
     KNI_ReturnVoid();
 }
