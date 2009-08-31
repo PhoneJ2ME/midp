@@ -815,6 +815,15 @@ public class MIDPWindow extends CWindow {
                 sizeChangedOccured = false;
             }
         }
+        
+        // #ifdef ENABLE_OPENGL  
+        com.sun.midp.lcdui.OpenGLEnvironmentProxy env = com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance();
+        if (buttonLayer.visible && env.isOpenGLEnabled()) {
+            // force soft button layer to be repainted in every frame
+            buttonLayer.setDirty();
+        }
+        // #endif
+
         super.paint(g, refreshQ);
     }
 
@@ -835,6 +844,16 @@ public class MIDPWindow extends CWindow {
         //   state of the owner window, however it is not enough to bypass
         //   the Chameleon paint engine. Body layer holding the Canvas
         //   should be not overlapped by a visible layer also.
+
+        // #ifdef ENABLE_OPENGL  
+        com.sun.midp.lcdui.OpenGLEnvironmentProxy env = com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance();
+        if (buttonLayer.visible && env.isOpenGLEnabled()) {
+            // we need to disable the optimization for OpenGL midlets 
+            // because we force softbutoon layer to be repainted in every frame
+            return false;
+        }
+        // #endif
+
         if (super.dirty) {
             // Schedule next overlapping check
             bodyChecked = false;
