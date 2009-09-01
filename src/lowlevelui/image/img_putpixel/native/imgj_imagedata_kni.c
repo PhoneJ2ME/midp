@@ -39,6 +39,22 @@
 #include <img_errorcodes.h>
 #include "imgj_rgb.h"
 
+#include <gxj_putpixel.h>
+
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+/** Convert 32-bit (ABGR) color to 16bit (565) color */
+#define GXJ_ABGR32TORGB16(x) ( (((x) & 0x000000F8) << 8) | \
+                               (((x) & 0x0000FC00) >> 5) | \
+		               (((x) & 0x00F80000) >> 19) )
+ 
+#define GXJ_RGB16TOARGB32(x) ( (((x) & 0x001F) << 3) | (((x) & 0x001C) >> 2) |\
+                               (((x) & 0x07E0) << 5) | (((x) & 0x0600) >> 1) |\
+                               (((x) & 0xF800) << 8) | (((x) & 0xE000) << 3) |\
+                               0xFF000000 )
+
+#define GXJ_ARGB32TOABGR32(x) ( ((x) & 0xFF00FF00) | (((x) << 16) & 0xFF0000) | (((x) >> 16) & 0xFF) )
+#endif
+
 
 /**
  * Gets an ARGB integer array from this <tt>ImmutableImage</tt>. The
@@ -96,5 +112,62 @@ KNIDECL(javax_microedition_lcdui_ImageData_getRGB) {
     }
 
     KNI_EndHandles();
+    KNI_ReturnVoid();
+}
+
+/**
+ * Converts pixel format between 16bit (RGB, 565) and 32bit (ABGR, 8888).
+ *
+ * @param srcData source array of pixels
+ * @param dstData target array of pixels
+ * @param totalPixels how many pixels are in srcData
+ * @param to32bit true if asked to convert from 16bit to 32bit,
+ *                false if the coversion is 32bit->16bit
+ */
+/* private native void convertPixels(byte[] srcData, byte[] dstData, int totalPixels, boolean to32bit) */
+KNIEXPORT KNI_RETURNTYPE_VOID
+KNIDECL(javax_microedition_lcdui_ImageData_convertPixels) {
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+    jbyte *srcArray, *dstArray;
+    int i, size2;
+    jboolean to32bit = KNI_GetParameterAsBoolean(4);
+    int totalPixels  = KNI_GetParameterAsInt(3);
+
+    KNI_StartHandles(2);
+    KNI_DeclareHandle(srcData);
+    KNI_DeclareHandle(dstData);
+
+    KNI_GetParameterAsObject(2, dstData);
+    KNI_GetParameterAsObject(1, srcData);
+
+    SNI_BEGIN_RAW_POINTERS;
+
+    srcArray = JavaByteArray(srcData);
+    dstArray = JavaByteArray(dstData);
+
+    int size2 = KNI_GetArrayLength(rgbData);
+
+    if (to32bit == KNI_TRUE) {
+        gxj_pixel16_type* src = (gxj_pixel16_type*)srcArray;
+        gxj_pixel32_type* dst = (gxj_pixel32_type*)dstArray;
+        for (i = 0; i < totalPixels; i++) {
+           *dst = GXJ_ARGB32TOABGR32(GXJ_RGB16TOARGB32(*src));
+           src++;
+           dst++;
+        }
+    } else {
+        gxj_pixel32_type* src = (gxj_pixel32_type*)srcArray;
+        gxj_pixel16_type* dst = (gxj_pixel16_type*)dstArray;
+        for (i = 0; i < totalPixels; i++) {
+           *dst = GXJ_ABGR32TORGB16(*src);
+           src++;
+           dst++;
+        }
+    }
+
+    SNI_END_RAW_POINTERS;
+
+    KNI_EndHandles();
+#endif
     KNI_ReturnVoid();
 }
