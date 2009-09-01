@@ -86,6 +86,12 @@ extern jboolean jcapp_reverse_orientation(int hardwareId);
 extern jboolean jcapp_get_reverse_orientation(int hardwareId);
 
 /**
+ * Returns KNI_TRUE if the device (handset) is landscape oriented. 
+ * Returns KNI_FALSE otherwise.
+ */
+extern jboolean jcapp_is_device_orientation_landscape(void);
+
+/**
  * Handle clamshell event
  */
 extern void jcapp_handle_clamshell_event();

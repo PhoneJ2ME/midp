@@ -313,6 +313,12 @@ public class DisplayDevice {
 	    " state:" +state;
 
     }
+    
+    public static boolean isDeviceLandscapeOrientation() {
+        return isDeviceLandscapeOrientation0();
+    }
+    
+    private static native boolean isDeviceLandscapeOrientation0();
 
     private native int getScreenWidth0(int hardwareId);
     private native int getScreenHeight0(int hardwareId);

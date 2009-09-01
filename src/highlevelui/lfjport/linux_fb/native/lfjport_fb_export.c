@@ -98,6 +98,15 @@ jboolean lfjport_get_reverse_orientation(int hardwareId)
 }
 
 /**
+ * Returns KNI_TRUE if the device (handset) is landscape oriented. 
+ * Returns KNI_FALSE otherwise.
+ */
+jboolean lfjport_is_device_orientation_landscape(void) 
+{
+    return KNI_FALSE;
+}
+
+/**
  * Bridge function to return screen width
  */
 int lfjport_get_screen_width(int hardwareId)

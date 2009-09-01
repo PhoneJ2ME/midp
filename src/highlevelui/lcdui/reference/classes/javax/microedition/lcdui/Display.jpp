@@ -788,6 +788,22 @@ public class Display {
     }
 
     private int orientation;
+    
+    private static int getStaticMidletOrientation(MIDlet midlet) {
+        String prop = midlet.getAppProperty("Sprint-Viewing");
+        
+        int orientation = ORIENTATION_AUTO;
+        if (prop != null) {
+            prop = prop.toLowerCase();
+            
+            if ("portrait".equals(prop)) {
+                orientation = ORIENTATION_PORTRAIT;
+            } else if ("landscape".equals(prop)) {
+                orientation = ORIENTATION_LANDSCAPE;
+            }
+        }
+        return orientation;
+    }
 
     /**
      * Release any resources, such as threads, which migth refer
@@ -824,7 +840,7 @@ public class Display {
         displayDevice = dd;
 
         if (owner instanceof MIDlet) {
-            orientation = ORIENTATION_PORTRAIT;
+            orientation = getStaticMidletOrientation((MIDlet)owner);
         } else {
             orientation = ORIENTATION_AUTO;
         }
@@ -915,7 +931,7 @@ public class Display {
 
         if (owner instanceof MIDlet) {
             String vk = ((MIDlet)owner).getAppProperty("Sprint-Canvas-Keypad");
-            if ("no".equals(vk)) {
+            if (vk != null && "no".equals(vk.toLowerCase())) {
                 showVirtualKeyboard = false;
             }
         } else {
@@ -4011,21 +4027,12 @@ public class Display {
         public void handleRotationEvent(boolean setPortrait) {
             boolean isPortrait =
                 !Display.this.displayDevice.getReverseOrientation();
-            if (isPortrait == setPortrait) {
+            if (isPortrait == setPortrait 
+            || orientation != ORIENTATION_AUTO) {
                 return;
             }
-
-            try {
-                handleRotationEventInternal();
-            } finally {
-                if (owner instanceof MIDlet) {
-                    if (displayDevice.getReverseOrientation()) {
-                        orientation = ORIENTATION_LANDSCAPE;
-                    } else {
-                        orientation = ORIENTATION_PORTRAIT;
-                    }
-                }
-            }
+            
+            handleRotationEventInternal();            
         }
 
         private void handleResize() {
@@ -4230,9 +4237,8 @@ public class Display {
                 if (screenOrientation != orientation) {
                     consumer.handleRotationEventInternal();
                 }
-            } else if (!hasForegroundDisplay
-                    && displayDevice.getReverseOrientation()) {
-                // rotate to portrait mode
+            } else if (DisplayDevice.isDeviceLandscapeOrientation() != 
+                    displayDevice.getReverseOrientation()) {
                 consumer.handleRotationEventInternal();
             } else if (updateScreenDimensions()) {
                 consumer.handleResize();

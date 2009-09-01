@@ -69,6 +69,12 @@ void lfpport_handle_clamshell_event();
 jboolean lfpport_get_reverse_orientation(int hardwareId);
 
 /**
+ * Returns KNI_TRUE if the device (handset) is landscape oriented. 
+ * Returns KNI_FALSE otherwise.
+ */
+jboolean lfpport_is_device_orientation_landscape(void);
+
+/**
  * Return screen width
  */
 int lfpport_get_screen_width(int hardwareId);

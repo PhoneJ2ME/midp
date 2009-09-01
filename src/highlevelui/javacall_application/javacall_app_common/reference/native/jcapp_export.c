@@ -282,6 +282,15 @@ jboolean jcapp_get_reverse_orientation(int hardwareId) {
 }
 
 /**
+ * Returns KNI_TRUE if the device (handset) is landscape oriented. 
+ * Returns KNI_FALSE otherwise.
+ */
+jboolean jcapp_is_device_orientation_landscape(void) {
+    return javacall_lcd_is_device_orientation_landscape();
+}
+
+
+/**
  * Return screen width
  * @param hardwareId unique id of hardware display
  */
