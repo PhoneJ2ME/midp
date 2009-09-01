@@ -28,6 +28,10 @@ package com.sun.midp.appmanager;
 
 import javax.microedition.lcdui.*;
 
+import com.sun.midp.events.Event;
+import com.sun.midp.events.EventListener;
+import com.sun.midp.events.EventQueue;
+import com.sun.midp.events.EventTypes;
 import com.sun.midp.installer.*;
 import com.sun.midp.main.*;
 import com.sun.midp.midletsuite.*;
@@ -93,7 +97,7 @@ import java.util.*;
  * Running midlets can be distinguished from non-running MIdlets/MIDlet suites
  * by the color of their name.
  */
-class AppManagerPeer implements CommandListener {
+class AppManagerPeer implements CommandListener, EventListener {
 
     private AppManagerUI appManagerUI;
 
@@ -305,6 +309,9 @@ class AppManagerPeer implements CommandListener {
                 appManagerUI.setCurrentItem(currentItem);
             } // ms != null
         }
+
+        EventQueue eventQueue = EventQueue.getEventQueue();
+        eventQueue.registerEventListener(EventTypes.CHANGE_LOCALE_EVENT, this);
     }
 
 
@@ -1254,6 +1261,20 @@ class AppManagerPeer implements CommandListener {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Javadoc in EventListener interface
+     */
+    public boolean preprocess(Event event, Event waitingEvent) {
+        return true;
+    }
+
+    /**
+     * Javadoc in EventListener interface
+     */
+    public void process(Event event) {
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&& AppManagerPeer Received CHANGE_LOCAL_EVENT");
     }
 }
 

@@ -122,6 +122,7 @@ public class DisplayEventListener implements EventListener {
         NativeEvent nativeEvent = (NativeEvent) event;
 
         if (event.getType() == EventTypes.CHANGE_LOCALE_EVENT) {
+            System.out.println("DisplayEventListener.process called EventType.CHANGE_LOCALE_EVENT found.");
             DisplayEventConsumer[] consumers =
                     displayContainer.getAllDisplayEventConsumers();
             for (int i = 0; i < consumers.length; i++) {
