@@ -92,11 +92,11 @@ INT_XML_FILES += \
 	$(INT_COMMON_XML_DIR)/constants.xml \
 	$(INT_COMMON_XML_DIR)/i18n_constants.xml \
 	$(INT_COMMON_XML_DIR)/l10n/en-US.xml \
-	$(INT_COMMON_XML_DIR)/l10n/es-ES.xml \
 	$(INT_COMMON_XML_DIR)/chameleon/skin_constants.xml \
 	$(INT_COMMON_XML_DIR)/suitestore_constants.xml \
 	$(INT_COMMON_XML_DIR)/alert_type_constants.xml
 
+#	$(INT_COMMON_XML_DIR)/l10n/es-ES.xml
 ifeq ($(TARGET_VM), cdc_vm)
 INT_XML_FILES += \
     $(INT_COMMON_XML_DIR)/ams_cdc/storage_constants.xml
