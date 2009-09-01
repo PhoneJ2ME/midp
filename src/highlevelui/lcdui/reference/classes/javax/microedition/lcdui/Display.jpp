@@ -798,6 +798,10 @@ public class Display {
 
             if ("on".equals(prop)) {
                 orientation = ORIENTATION_AUTO;
+            } else if ("portrait".equals(prop)) {
+                orientation = ORIENTATION_PORTRAIT;
+            } else if ("landscape".equals(prop)) {
+                orientation = ORIENTATION_LANDSCAPE;
             }
         }
         return orientation;
