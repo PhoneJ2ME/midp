@@ -790,22 +790,6 @@ public class Display {
     private int orientation;
     
     private static int getStaticMidletOrientation(MIDlet midlet) {
-        String prop = midlet.getAppProperty("Sprint-Viewing");
-        
-        int orientation = ORIENTATION_AUTO;
-        if (prop != null) {
-            prop = prop.toLowerCase();
-            
-            if ("portrait".equals(prop)) {
-                orientation = ORIENTATION_PORTRAIT;
-            } else if ("landscape".equals(prop)) {
-                orientation = ORIENTATION_LANDSCAPE;
-            }
-        }
-        return orientation;
-    }
-
-    private static int getStaticMidletOrientation(MIDlet midlet) {
         String prop = midlet.getAppProperty("Sprint-Auto-Rotate");
 
         int orientation = ORIENTATION_PORTRAIT;
