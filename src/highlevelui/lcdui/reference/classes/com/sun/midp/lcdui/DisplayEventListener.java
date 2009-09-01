@@ -115,7 +115,7 @@ public class DisplayEventListener implements EventListener {
                 && event instanceof LCDUIEvent) {
             LCDUIEvent lcduiEvent = (LCDUIEvent)event;
                     
-            lcduiEvent.display.handleRotationEvent(lcduiEvent.minorCode == 0);
+            lcduiEvent.display.handleDisplayRotationEvent(lcduiEvent.minorCode == 0);
             return;
         }
         
@@ -190,7 +190,7 @@ public class DisplayEventListener implements EventListener {
                     return;
 
                 case EventTypes.ROTATION_EVENT:
-                    dc.handleRotationEvent(nativeEvent.intParam1 == 0);
+                    dc.handleDeviceRotationEvent(nativeEvent.intParam1 == 0);
                     return;
 
                 case EventTypes.DISPLAY_CLAMSHELL_STATE_CHANGED_EVENT:

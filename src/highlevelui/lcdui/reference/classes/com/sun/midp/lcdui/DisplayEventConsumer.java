@@ -169,13 +169,21 @@ public interface DisplayEventConsumer {
 
 
     /**
-     * Called by event delivery when size of screen was changed.
+     * Called by event delivery when device orientation changes.
+     *
+     * @param setPortrait If <code>true<code/> then device orientation is changed 
+     * to portrait, otherwise to landscape
+     */
+    public void handleDeviceRotationEvent(boolean setPortrait);
+        
+    /**
+     * Called by event delivery when display orientation change is requested.
      *
      * @param setPortrait If <code>true<code/> then display should be set
      *  to portrait orientation, otherwise should be set to
      *  landscape orientation
      */
-    public void handleRotationEvent(boolean setPortrait);
+    public void handleDisplayRotationEvent(boolean setPortrait);
 
      /*
       * Called by event delivery when clamshell event occurs.
