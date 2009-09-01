@@ -35,6 +35,8 @@ import java.io.IOException;
  */
 class ImageDataFactory implements AbstractImageDataFactory {
 
+    private static final int PIXEL_SIZE = bytesInPixel();
+
     /**
      * PNG Header Data
      */
@@ -125,8 +127,9 @@ class ImageDataFactory implements AbstractImageDataFactory {
     public ImageData createImmutableCopy(ImageData mutableSource) {
         int width  = mutableSource.getWidth();
         int height = mutableSource.getHeight();
+        int length = width * height * PIXEL_SIZE;
 
-        return new ImageData(width, height, false,
+        return  new ImageData(width, height, false,
                               mutableSource.getPixelData());
     }
 

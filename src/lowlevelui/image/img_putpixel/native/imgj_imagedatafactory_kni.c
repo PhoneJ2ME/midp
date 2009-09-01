@@ -759,9 +759,10 @@ KNIDECL(javax_microedition_lcdui_ImageDataFactory_loadRomizedImage) {
     KNI_GetParameterAsObject(1, imageData);
 
 
-    // Note: current image rom MUST be restored before leaving the function
+    // Note: current image rom MUST be restored later in the function
     lfj_select_rgb565_image_rom();
     imageDataLength16 = lfj_load_image_from_rom(imageId, &imageDataPtr16);
+
     lfj_select_rgb888_image_rom();
     imageDataLength32 = lfj_load_image_from_rom(imageId, &imageDataPtr32);
 
