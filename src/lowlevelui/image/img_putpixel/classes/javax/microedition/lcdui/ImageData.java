@@ -32,6 +32,8 @@ package javax.microedition.lcdui;
  */
 final class ImageData implements AbstractImageData {
 
+    private static final int PIXEL_SIZE = ImageDataFactory.bytesInPixel();
+
     /**
      * The width, height of this Image
      */
@@ -47,11 +49,6 @@ final class ImageData implements AbstractImageData {
      * If this is null, use nativePixelData and nativeAlphaData instead.
      */
     private byte[] pixelData;
-
-    /**
-     * Specify color depth for pixelData's content
-     */
-    private int bytesInPixel;
 
     /**
      * Image alpha data byte array.
@@ -132,11 +129,7 @@ final class ImageData implements AbstractImageData {
         this.width = width;
         this.height = height;
         this.isMutable = isMutable;
-
-        // We don't use ImageDataFactory.bytesInPixel() since current format
-        // may changed since the time the pixelData array was created
-        this.bytesInPixel = ((pixelData.length / (width * height)) < 3) ? 2 : 4;
-        int length = width * height * bytesInPixel;
+        int length = width * height * ImageDataFactory.bytesInPixel();
         byte[] newPixelData = new byte[length];
         System.arraycopy(pixelData, 0, newPixelData, 0, length);
 
@@ -163,9 +156,7 @@ final class ImageData implements AbstractImageData {
         this.height = height;
         this.isMutable = isMutable;
 
-        this.bytesInPixel = ImageDataFactory.bytesInPixel();
-        int length = width * height * bytesInPixel;
-        pixelData = new byte[length];
+        pixelData = new byte[width * height * ImageDataFactory.bytesInPixel()];
 
         if (allocateAlpha) {
             alphaData = new byte[width * height];
@@ -244,46 +235,6 @@ final class ImageData implements AbstractImageData {
      *         <code>ImageData</code> instance.
      */
     byte[] getPixelData() {
-        checkPixelFormat();
         return pixelData;
     }
-
-    /**
-     * Checks and converts (if required) pixelData's content to current pixel
-     * format.
-     */
-    synchronized void checkPixelFormat() {
-        // Skip format check for romized images b/c we are handled them in a
-        // different way
-        if (pixelData == null) {
-            return;
-        }
-
-        int bytesInPixel = ImageDataFactory.bytesInPixel();
-
-        // Do nothing if format is unchanged
-        if (this.bytesInPixel == bytesInPixel) {
-            return;
-        }
-
-        int totalPixels = width * height;
-        int length = totalPixels * bytesInPixel;
-        byte[] newPixelData = new byte[length];
-
-        convertPixels(this.pixelData, newPixelData, totalPixels, bytesInPixel > this.bytesInPixel);
-
-        this.pixelData = newPixelData;
-        this.bytesInPixel = bytesInPixel;
-   }
-
-   /**
-    * Converts pixel format between 16bit (RGB, 565) and 32bit (ABGR, 8888).
-    *
-    * @param srcData source array of pixels
-    * @param dstData target array of pixels
-    * @param totalPixels how many pixels are in srcData
-    * @param to32bit true if asked to convert from 16bit to 32bit,
-    *                false if the coversion is 32bit->16bit
-    */
-   private native void convertPixels(byte[] srcData, byte[] dstData, int totalPixels, boolean to32bit);
 }

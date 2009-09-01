@@ -1341,8 +1341,6 @@ public class Graphics {
             throw new NullPointerException();
         }
 
-        image.checkPixelFormat();
-
         if (!render(image, x, y, anchor)) {
             throw new IllegalArgumentException("");
         }
@@ -1453,9 +1451,6 @@ public class Graphics {
         if (src == null) {
             throw new NullPointerException();
         }
-
-        src.checkPixelFormat();
-
         if (!renderRegion(src, x_src, y_src, width, height,
                           transform, x_dest, y_dest, anchor)) {
             throw new IllegalArgumentException("");
