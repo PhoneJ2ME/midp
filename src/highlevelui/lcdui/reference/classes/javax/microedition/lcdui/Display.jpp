@@ -805,6 +805,20 @@ public class Display {
         return orientation;
     }
 
+    private static int getStaticMidletOrientation(MIDlet midlet) {
+        String prop = midlet.getAppProperty("Sprint-Auto-Rotate");
+
+        int orientation = ORIENTATION_PORTRAIT;
+        if (prop != null) {
+            prop = prop.toLowerCase();
+
+            if ("on".equals(prop)) {
+                orientation = ORIENTATION_AUTO;
+            }
+        }
+        return orientation;
+    }
+
     /**
      * Release any resources, such as threads, which migth refer
      * back to the application-level, which in turn may have
