@@ -38,6 +38,12 @@ import javax.microedition.midlet.*;
 
 import com.sun.j2me.security.AccessController;
 
+import com.sun.midp.events.Event;
+import com.sun.midp.events.EventListener;
+import com.sun.midp.events.EventQueue;
+import com.sun.midp.events.EventTypes;
+import com.sun.midp.events.NativeEvent;
+
 import com.sun.midp.io.*;
 
 import com.sun.midp.i18n.Resource;
@@ -62,7 +68,7 @@ import com.sun.midp.configurator.Constants;
  * Implements the required MIDletSuite functionality needed by the
  * system.
  */
-public final class MIDletSuiteImpl implements MIDletSuite {
+public final class MIDletSuiteImpl implements MIDletSuite, EventListener {
     /** This class has a different security domain than the application. */
     private static SecurityToken classSecurityToken;
 
@@ -136,6 +142,10 @@ public final class MIDletSuiteImpl implements MIDletSuite {
             throw new MIDletSuiteCorruptedException(
                 "installInfo.load IOException");
         }
+
+        System.out.println("MIDletSuiteImpl constructor registering for eventqueue events.");
+        EventQueue.getEventQueue().registerEventListener(EventTypes.CHANGE_LOCALE_EVENT,
+                                                         this);
     }
 
     /**
@@ -779,5 +789,37 @@ public final class MIDletSuiteImpl implements MIDletSuite {
      */
     public String getSecureFilenameBase() {
         return midletSuiteStorage.getSecureFilenameBase(getID());
+    }
+
+
+    /**
+     * Preprocess an event that is being posted to the event queue.
+     * This implementation of the method always return true.
+     *
+     * @param event event being posted
+     *
+     * @param waitingEvent previous event of this type waiting in the
+     *     queue to be processed
+     *
+     * @return true to allow the post to continue
+     */
+    public boolean preprocess(Event event, Event waitingEvent) {
+        return true;
+    }
+
+    /**
+     * Process an Execute event to start a new MIDlet.
+     * If the MIDlet is already in the ProxyList it will <strong>not</strong>
+     * start it again.
+     * If the MIDlet/Isolate has decided to exit but has
+     * not yet sent the remove event the execute will be unreliable.
+     *
+     * @param event event to process
+     */
+    public void process(Event event) {
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Resource Received CHANGE_LOCAL_EVENT");
+        NativeEvent nativeEvent = (NativeEvent)event;
+        String locale = nativeEvent.stringParam1;
+        Resource.setResourceBundle(locale);
     }
 }

@@ -58,36 +58,52 @@ abstract public class Resource {
     private static ResourceBundle res = null;
 
     static {
-	res = null;
-	String loc = Configuration.getProperty("microedition.locale");
-	
-	if ((loc == null) || (loc.equals("en-US"))) {
-	    // the default case
-	    res = (ResourceBundle) new LocalizedStrings();
-	} else {
-	    String cls = "com.sun.midp.l10n.LocalizedStrings";
+        res = null;
+        setResourceBundle();
+    }
+
+    public static void setResourceBundle() {
+        String locale = Configuration.getProperty("microedition.locale");
+        setResourceBundle(locale);
+    }
+
+    /**
+     * Sets the resource bundle to the appropriate bundle with the specified
+     * locale.
+     *
+     * @param locale the locale to set.
+     */
+    public static void setResourceBundle(String locale) {
+        System.out.println("Resource.setResourceBundle called, setting locale to " + locale);
+        if ((locale == null) || (locale.equals("en-US"))) {
+            // the default case
+            res = (ResourceBundle) new LocalizedStrings();
+        } else {
+            String cls = "com.sun.midp.l10n.LocalizedStrings";
             /* 
              * This only checks for the first '-' in the locale, and
              * convert to '_' for Class.forName() to work.
              */
             int hyphen;
-        if ((hyphen = loc.indexOf('-')) != -1) {
-                StringBuffer tmploc = new StringBuffer(loc);
-                tmploc.setCharAt(hyphen, '_');
-                loc = tmploc.toString();
-        }
+            if ((hyphen = locale.indexOf('-')) != -1) {
+                StringBuffer tmplocale = new StringBuffer(locale);
+                tmplocale.setCharAt(hyphen, '_');
+                locale = tmplocale.toString();
+            }
 	    
             while (true) {
                 try {
-                    Class c = Class.forName(cls + "_" + loc);
+                    Class c = Class.forName(cls + "_" + locale);
                     if (c != null) {
                         res = (ResourceBundle) c.newInstance();
                     }
-                } catch (Throwable t) {}
+                } catch (Throwable t) {
+                }
+
                 if (res == null) {
-                    int pos = loc.lastIndexOf('_');
+                    int pos = locale.lastIndexOf('_');
                     if (pos != -1) {
-                        loc = loc.substring(0, pos);
+                        locale = locale.substring(0, pos);
                     } else {
                         break;
                     }
@@ -97,18 +113,18 @@ abstract public class Resource {
             }
         }
 
-	if (res == null) {
-	    if (Logging.REPORT_LEVEL <= Logging.ERROR) {
-		Logging.report(Logging.ERROR, LogChannels.LC_I18N,
-			       "Just can't proceed! Resource is NULL!!");
-	    }
+        if (res == null) {
+            if (Logging.REPORT_LEVEL <= Logging.ERROR) {
+                Logging.report(Logging.ERROR, LogChannels.LC_I18N,
+                               "Just can't proceed! Resource is NULL!!");
+            }
 
-        // the default case
-	    res = (ResourceBundle) new LocalizedStrings();
+            // the default case
+            res = (ResourceBundle) new LocalizedStrings();
             // Porting suggestion:
             // System should quit MIDP runtime since resource is 
             // not available. 
-	}
+        }
     }
 
     /**
