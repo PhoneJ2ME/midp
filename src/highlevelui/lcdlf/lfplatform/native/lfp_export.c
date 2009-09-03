@@ -68,6 +68,14 @@ jboolean lcdlf_get_reverse_orientation(int hardwareId) {
 }
 
 /**
+ * Returns KNI_TRUE if the device (handset) is landscape oriented. 
+ * Returns KNI_FALSE otherwise.
+ */
+jboolean lcdlf_is_device_orientation_landscape(void) {
+  return lfpport_is_device_orientation_landscape(hardwareId);
+}
+
+/**
  * Return screen width
  */
 int lcdlf_get_screen_width(int hardwareId) {

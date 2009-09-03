@@ -788,6 +788,24 @@ public class Display {
     }
 
     private int orientation;
+    
+    private static int getStaticMidletOrientation(MIDlet midlet) {
+        String prop = midlet.getAppProperty("Sprint-Auto-Rotate");
+
+        int orientation = ORIENTATION_PORTRAIT;
+        if (prop != null) {
+            prop = prop.toLowerCase();
+
+            if ("on".equals(prop)) {
+                orientation = ORIENTATION_AUTO;
+            } else if ("portrait".equals(prop)) {
+                orientation = ORIENTATION_PORTRAIT;
+            } else if ("landscape".equals(prop)) {
+                orientation = ORIENTATION_LANDSCAPE;
+            }
+        }
+        return orientation;
+    }
 
     /**
      * Release any resources, such as threads, which migth refer
@@ -824,7 +842,7 @@ public class Display {
         displayDevice = dd;
 
         if (owner instanceof MIDlet) {
-            orientation = ORIENTATION_PORTRAIT;
+            orientation = getStaticMidletOrientation((MIDlet)owner);
         } else {
             orientation = ORIENTATION_AUTO;
         }
@@ -915,7 +933,7 @@ public class Display {
 
         if (owner instanceof MIDlet) {
             String vk = ((MIDlet)owner).getAppProperty("Sprint-Canvas-Keypad");
-            if ("no".equals(vk)) {
+            if (vk != null && "no".equals(vk.toLowerCase())) {
                 showVirtualKeyboard = false;
             }
         } else {
@@ -4002,27 +4020,43 @@ public class Display {
 
 
         /**
-         * Called by event delivery when size of screen was changed.
+         * Called by event delivery when device orientation changes.
+         *
+         * @param setPortrait If <code>true<code/> then device orientation is changed 
+         * to portrait, otherwise to landscape
+         */
+        public void handleDeviceRotationEvent(boolean setPortrait) {
+            boolean isPortrait =
+                !Display.this.displayDevice.getReverseOrientation();
+            if (isPortrait == setPortrait 
+            || orientation != ORIENTATION_AUTO) {
+                return;
+            }
+
+            handleRotationEventInternal();
+        }
+        
+        /**
+         * Called by event delivery when display orientation change is requested.
          *
          * @param setPortrait If <code>true<code/> then display should be set
          *  to portrait orientation, otherwise should be set to
          *  landscape orientation
          */
-        public void handleRotationEvent(boolean setPortrait) {
+        public void handleDisplayRotationEvent(boolean setPortrait) {
             boolean isPortrait =
                 !Display.this.displayDevice.getReverseOrientation();
-            if (isPortrait == setPortrait) {
-                return;
-            }
 
             try {
-                handleRotationEventInternal();
+                if (isPortrait != setPortrait) {
+                    handleRotationEventInternal();
+                }
             } finally {
                 if (owner instanceof MIDlet) {
-                    if (displayDevice.getReverseOrientation()) {
-                        orientation = ORIENTATION_LANDSCAPE;
-                    } else {
+                    if (setPortrait) {
                         orientation = ORIENTATION_PORTRAIT;
+                    } else {
+                        orientation = ORIENTATION_LANDSCAPE;
                     }
                 }
             }
@@ -4230,9 +4264,8 @@ public class Display {
                 if (screenOrientation != orientation) {
                     consumer.handleRotationEventInternal();
                 }
-            } else if (!hasForegroundDisplay
-                    && displayDevice.getReverseOrientation()) {
-                // rotate to portrait mode
+            } else if (DisplayDevice.isDeviceLandscapeOrientation() != 
+                    displayDevice.getReverseOrientation()) {
                 consumer.handleRotationEventInternal();
             } else if (updateScreenDimensions()) {
                 consumer.handleResize();

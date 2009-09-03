@@ -196,6 +196,13 @@ KNIDECL(com_sun_midp_lcdui_DisplayDevice_getReverseOrientation0) {
     KNI_ReturnBoolean(res);
 }
 
+KNIEXPORT KNI_RETURNTYPE_BOOLEAN
+KNIDECL(com_sun_midp_lcdui_DisplayDevice_isDeviceLandscapeOrientation0) {
+    jboolean res = 0;
+    res = lcdlf_is_device_orientation_landscape();
+    KNI_ReturnBoolean(res);
+}
+
 KNIEXPORT KNI_RETURNTYPE_INT
 KNIDECL(com_sun_midp_lcdui_DisplayDevice_getScreenHeight0) {
     jint hardwareId = KNI_GetParameterAsInt(1);
