@@ -644,7 +644,6 @@ public class Display {
       * default
      */
     private boolean useOpenGL = false;
-    private static boolean lastUsed32Bit = false;
     private boolean use32Bit = false;
     private boolean useVirtualKeyboard = true;
 
@@ -905,16 +904,9 @@ public class Display {
             String propval = handler.getMIDletSuite().getProperty("Sprint-3D");
             if (String.valueOf("YES").equalsIgnoreCase(propval)) {
                 accessor.enableOpenGL();
-            } else {
-                lastUsed32Bit = false;
             }
         }
-        else {
-            if (lastUsed32Bit) {
-                com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance().lowerOpenGL();
-                com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance().switchColorDepth(0);
-            }
-        }
+
         // #endif ENABLE_DYNAMIC_PIXEL_FORMAT
 
         /**
@@ -3364,7 +3356,6 @@ public class Display {
         public void enableOpenGL() {
             // #ifdef ENABLE_DYNAMIC_PIXEL_FORMAT
             use32Bit = true;
-            lastUsed32Bit = true;
             useOpenGL = true;
             com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance().
                 enableOpenGL(width, height);
@@ -4242,7 +4233,6 @@ public class Display {
                 if (useOpenGL) {
                     com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance().raiseOpenGL();
                     if (use32Bit) {
-                        lastUsed32Bit = true;
                         com.sun.midp.lcdui.OpenGLEnvironmentProxy.getInstance().switchColorDepth(1);
                     }
                 }
