@@ -796,7 +796,9 @@ public class Display {
             prop = prop.toLowerCase();
 
             if ("on".equals(prop)) {
+// #ifdef ENABLE_DEVICE_ROTATION
                 orientation = ORIENTATION_AUTO;
+// #endif ENABLE_DEVICE_ROTATION
             } else if ("portrait".equals(prop)) {
                 orientation = ORIENTATION_PORTRAIT;
             } else if ("landscape".equals(prop)) {
@@ -4018,14 +4020,17 @@ public class Display {
          * to portrait, otherwise to landscape
          */
         public void handleDeviceRotationEvent(boolean setPortrait) {
+// #ifdef ENABLE_DEVICE_ROTATION
             boolean isPortrait =
                 !Display.this.displayDevice.getReverseOrientation();
             if (isPortrait == setPortrait 
-            || orientation != ORIENTATION_AUTO) {
+            || orientation != ORIENTATION_AUTO
+            || !hasForeground) {
                 return;
             }
 
             handleRotationEventInternal();
+// #endif ENABLE_DEVICE_ROTATION
         }
         
         /**
@@ -4045,7 +4050,7 @@ public class Display {
                 }
             } finally {
                 if (owner instanceof MIDlet) {
-                    if (setPortrait) {
+                    if (!displayDevice.getReverseOrientation()) {
                         orientation = ORIENTATION_PORTRAIT;
                     } else {
                         orientation = ORIENTATION_LANDSCAPE;
@@ -4255,8 +4260,14 @@ public class Display {
                 if (screenOrientation != orientation) {
                     consumer.handleRotationEventInternal();
                 }
+// #ifdef ENABLE_DEVICE_ROTATION
             } else if (DisplayDevice.isDeviceLandscapeOrientation() != 
                     displayDevice.getReverseOrientation()) {
+// #else
+            } else if (!hasForegroundDisplay
+                    && displayDevice.getReverseOrientation()) {
+                // rotate to portrait mode
+// #endif ENABLE_DEVICE_ROTATION
                 consumer.handleRotationEventInternal();
             } else if (updateScreenDimensions()) {
                 consumer.handleResize();
