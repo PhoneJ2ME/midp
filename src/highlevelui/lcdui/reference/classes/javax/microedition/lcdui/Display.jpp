@@ -3549,16 +3549,17 @@ public class Display {
                         // #else
                             displayDevice.refresh(displayId, x1, y1, x2, y2);
                         // #endif
+                
+                        // #ifdef ENABLE_OPENGL
+                            if (useOpenGL) {
+                                // This call to refresh a "zero" region is inserted to
+                                // trigger display update on some platforms
+                                displayDevice.refresh(displayId, 0, 0, 0, 0, useOpenGL);
+                            }
+                        // #endif ENABLE_OPENGL
                     }
             }
             finally {
-                // #ifdef ENABLE_OPENGL
-                if (useOpenGL) {
-                    // This call to refresh a "zero" region is inserted to
-                    // trigger display update on some platforms
-                    displayDevice.refresh(displayId, 0, 0, 0, 0, useOpenGL);
-                }
-                // #endif ENABLE_OPENGL
                 // #ifdef ENABLE_GCI
                 int[] bounds = {x,y,x+width,y+height};
                 gciScreenWidget.getDrawingSurface().renderingEnd(bounds);
