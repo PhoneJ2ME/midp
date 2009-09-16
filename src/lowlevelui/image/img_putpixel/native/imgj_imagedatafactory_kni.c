@@ -1057,16 +1057,33 @@ static void pixelCopy(PIXEL *src, const int srcLineW, const int srcXInc,
                       const int srcYInc, const int srcXStart,
                       PIXEL *dst, const int w, const int h) {
     int x, srcX;
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+    if (!pp_enable_32bit_mode) {
+        imgdcd_pixel16_type *dst16 = dst;
+        imgdcd_pixel16_type *src16 = src;
+        imgdcd_pixel16_type *dstPtrEnd = dst16 + (h * w );
+
+        (void)srcLineW; /* Surpress unused warning */
+
+        for (; dst16 < dstPtrEnd; dst16 += w, src16 += srcYInc) {
+            for (x = 0, srcX = srcXStart; x < w; srcX += srcXInc) {
+                dst16[x++] = src16[srcX];
+            }
+        }
+    } else {
+#endif
     PIXEL *dstPtrEnd = dst + (h * w );
 
     (void)srcLineW; /* Surpress unused warning */
 
     for (; dst < dstPtrEnd; dst += w, src += srcYInc) {
         for (x = 0, srcX = srcXStart; x < w; srcX += srcXInc) {
-            // printf("%d = %d\n", ((dst+x)-dstData), (src+srcX)-srcData);
             dst[x++] = src[srcX];
         }
     }
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+}
+#endif
 }
 
 static void pixelAndAlphaCopy(PIXEL *src, 
@@ -1076,6 +1093,23 @@ static void pixelAndAlphaCopy(PIXEL *src,
                               const int w, const int h,
                               const ALPHA *srcAlpha, ALPHA *dstAlpha) {
     int x, srcX;
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+    if (!pp_enable_32bit_mode) {
+        imgdcd_pixel16_type *dst16 = dst;
+        imgdcd_pixel16_type *src16 = src;
+        imgdcd_pixel16_type *dstPtrEnd = dst16 + (h * w );
+
+        (void)srcLineW; /* Surpress unused warning */
+
+        for (; dst16 < dstPtrEnd; dst16 += w, src16 += srcYInc,
+            dstAlpha += w, srcAlpha += srcYInc) {
+            for (x = 0, srcX = srcXStart; x < w; srcX += srcXInc) {
+                dstAlpha[x] = srcAlpha[srcX];
+                dst16[x++] = src16[srcX];
+            }
+        }
+    } else {
+#endif
     PIXEL *dstPtrEnd = dst + (h * w );
 
     (void)srcLineW; /* Surpress unused warning */
@@ -1083,11 +1117,13 @@ static void pixelAndAlphaCopy(PIXEL *src,
     for (; dst < dstPtrEnd; dst += w, src += srcYInc,
         dstAlpha += w, srcAlpha += srcYInc) {
         for (x = 0, srcX = srcXStart; x < w; srcX += srcXInc) {
-            // printf("%d = %d\n", ((dst+x)-dstData), (src+srcX)-srcData);
             dstAlpha[x] = srcAlpha[srcX];
             dst[x++] = src[srcX];
         }
     }
+#if ENABLE_DYNAMIC_PIXEL_FORMAT
+    }
+#endif
 }
 
 static void blit(int srcWidth, int srcHeight,
