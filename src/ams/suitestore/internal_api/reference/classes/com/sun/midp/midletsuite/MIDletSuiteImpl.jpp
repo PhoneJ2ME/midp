@@ -804,6 +804,7 @@ public final class MIDletSuiteImpl implements MIDletSuite, EventListener {
      * @return true to allow the post to continue
      */
     public boolean preprocess(Event event, Event waitingEvent) {
+        System.out.println("MIDletSuiteImpl.preprocess called CHANGE_LOCAL_EVENT");
         return true;
     }
 
@@ -817,7 +818,7 @@ public final class MIDletSuiteImpl implements MIDletSuite, EventListener {
      * @param event event to process
      */
     public void process(Event event) {
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Resource Received CHANGE_LOCAL_EVENT");
+        System.out.println("MIDletSuiteImpl.process called CHANGE_LOCAL_EVENT");
         NativeEvent nativeEvent = (NativeEvent)event;
         String locale = nativeEvent.stringParam1;
         Resource.setResourceBundle(locale);

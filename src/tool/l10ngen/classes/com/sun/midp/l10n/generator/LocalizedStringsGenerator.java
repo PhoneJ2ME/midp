@@ -478,6 +478,7 @@ class CSourceWriter {
             int type = writeOptimizedArray();
 
             pl("KNIEXPORT KNI_RETURNTYPE_OBJECT");
+            classname = stringToJNI(classname);
             pl("KNIDECL(com_sun_midp_l10n_" + classname + "_getContent) {");
             if (type != UNICODE) {
                 pl("    char stackbuffer[128];");
@@ -777,6 +778,36 @@ class CSourceWriter {
         pl("};");
 
         pl("static int max_index = " + strings.length + ";");
+    }
+
+    private String stringToJNI(String name) {
+        String result = "";
+        int length = name.length();
+
+        for (int i = 0; i < length; i++) { 
+            char ch = name.charAt(i);
+
+            if (ch <= 0x7f && Character.isLetterOrDigit(ch)) {
+                result = result + ch;
+            } else { 
+                result = result + '_';
+                switch(ch) { 
+                case '/':  break; // the _ is all we need
+                case '_':  result = result + '1'; break;
+                case ';':  result = result + '2'; break;
+                case '[':  result = result + '3'; break;
+                default: { 
+                    // Adding 0x100000 to a 16-bit number forces 
+                    // toHexString to produce a string of the form "10xxxx".
+                    // Discard the initial "1" to get the right result.
+                    String t = Integer.toHexString(ch + 0x100000);
+                    result = result + t.substring(1);
+                }
+                }
+            }
+        }
+
+        return result;
     }
 }
 
