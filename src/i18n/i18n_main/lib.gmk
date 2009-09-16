@@ -82,7 +82,8 @@ SUBSYSTEM_I18N_NATIVE_FILES += \
 endif
 
 SUBSYSTEM_I18N_NATIVE_FILES += \
-    LocalizedStringsBase.c
+    LocalizedStringsBase.c \
+    LocalizedStringsBase_es.c
 
 
 SUBSYSTEM_I18N_EXTRA_INCLUDES += \
@@ -102,6 +103,11 @@ $(OBJ_DIR)/LocalizedStringsBase.o: $(L10N_OUTPUT_DIR)/LocalizedStringsBase.c
 		$(LOG_ONLY)
 	@$(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
 
-
 # To add support for more locales, add a rule
 # here that's similar to $(OBJ_DIR)/LocalizedStringsBase.o
+
+$(OBJ_DIR)/LocalizedStringsBase_es.o: $(L10N_OUTPUT_DIR)/LocalizedStringsBase_es.c
+	@echo " ... $@" $(LOG)
+	@echo +++ $(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` \
+		$(LOG_ONLY)
+	@$(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
