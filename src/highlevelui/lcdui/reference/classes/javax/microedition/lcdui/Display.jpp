@@ -982,7 +982,6 @@ public class Display {
             } else {
                 screenDimensions[PORTRAIT_DIMENSION_ID] =
                         new Dimension(dd.getWidth(), dd.getHeight());
-
                 dd.setFullScreen(0, true);
 
                 screenDimensions[PORTRAIT_FULLSCREEN_DIMENSION_ID] =
@@ -3014,7 +3013,6 @@ public class Display {
         } else if (dim == LANDSCAPE_DIMENSION_ID) {
             dim = LANDSCAPE_FULLSCREEN_DIMENSION_ID;
         }
-
         return screenDimensions[dim].height;
     }
 
@@ -3132,7 +3130,7 @@ public class Display {
          * @param w the new width
          * @param h the new height
          */
-        public void callSizeChanged(int w, int h) {
+       public void callSizeChanged(int w, int h) {
             DisplayableLF currentCopy = Display.this.current;
             if (currentCopy != null) {
                 currentCopy.uCallSizeChanged(w, h);
@@ -3445,7 +3443,6 @@ public class Display {
                 this.y = y;
                 this.width = width;
                 this.height = height;
-
                 super.schedule(time);
             }
         }
@@ -4312,7 +4309,7 @@ public class Display {
             // So we call it outside LCDUILock.
             // Notify current to allocate resource and show.
             if (currentCopy != null) {
-                currentCopy.uCallShow();
+                //currentCopy.uCallShow();
                 // #ifdef ENABLE_CHAMELEON
                 // Notify Chameleon that this displayable is being shown.
                 // This call will not result in any call into
@@ -4321,6 +4318,7 @@ public class Display {
                     currentCopy.lGetDisplayable(),
                     currentCopy.lGetDisplayable().getHeight());
                 // #endif ENABLE_CHAMELEON
+                currentCopy.uCallShow();
             }
 
             synchronized (LCDUILock) {

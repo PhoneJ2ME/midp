@@ -317,6 +317,15 @@ abstract class DisplayableLFImpl implements DisplayableLF {
                     Display.handleThrowable(t);
                 }
              }
+            synchronized (Display.LCDUILock) {
+                if (owner instanceof GameCanvas) {
+                    GameCanvasLFImpl gameCanvasLF =
+                        GameMap.getGameCanvasImpl((GameCanvas)owner);
+                    if (gameCanvasLF != null) {
+                        gameCanvasLF.lCallSizeChanged(viewport[WIDTH], viewport[HEIGHT]);
+                    }
+                }
+            }
         }
 
         synchronized (Display.LCDUILock) {
