@@ -1133,6 +1133,7 @@ static void blit(int srcWidth, int srcHeight,
                  int transform) {
     PIXEL *srcPtr = NULL;
     int srcXInc=0, srcYInc=0, srcXStart=0;
+    ALPHA *srcAlpha = NULL;
     (void)srcHeight;
 
     switch (transform) {
@@ -1214,7 +1215,12 @@ static void blit(int srcWidth, int srcHeight,
             srcPtr = (gxj_pixel_type*)(((gxj_pixel16_type*)srcPixelData) + ((ySrc + height - 1) * srcWidth + xSrc));
             break;
         }
+        srcAlpha = srcAlphaData + ((gxj_pixel16_type*)srcPtr - (gxj_pixel16_type*)srcPixelData);
+    } else {
+        srcAlpha = srcAlphaData + (srcPtr - srcPixelData);
     }
+#else
+    srcAlpha = srcAlphaData + (srcPtr - srcPixelData);
 #endif
 
     if (transform & TRANSFORM_INVERTED_AXES) {
@@ -1222,7 +1228,6 @@ static void blit(int srcWidth, int srcHeight,
             pixelCopy(srcPtr, srcWidth, srcXInc, srcYInc, srcXStart,
                       dstPixelData, height, width);
         } else {
-            ALPHA *srcAlpha = srcAlphaData + (srcPtr - srcPixelData);
             pixelAndAlphaCopy(srcPtr, srcWidth, srcXInc, srcYInc,
                               srcXStart,
                               dstPixelData, height, width, srcAlpha,
@@ -1233,7 +1238,6 @@ static void blit(int srcWidth, int srcHeight,
             pixelCopy(srcPtr, srcWidth, srcXInc, srcYInc, srcXStart,
                       dstPixelData, width, height);
         } else {
-            ALPHA *srcAlpha = srcAlphaData + (srcPtr - srcPixelData);
             pixelAndAlphaCopy(srcPtr, srcWidth, srcXInc, srcYInc, srcXStart,
                               dstPixelData, width, height,
                               srcAlpha, dstAlphaData);
