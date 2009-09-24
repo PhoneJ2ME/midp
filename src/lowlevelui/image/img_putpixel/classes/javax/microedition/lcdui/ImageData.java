@@ -113,10 +113,6 @@ final class ImageData implements AbstractImageData {
             for (int i = 0; i < pixelData.length; i++) {
                 pixelData[i] = (byte)0xFF;
             }
-            for (int i = ((height - 23) * bytesInPixel * width);
-                 i > 0 && i < pixelData.length; i++) {
-                pixelData[i] = (byte)0;
-            }
         }
     }
 
