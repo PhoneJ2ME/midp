@@ -84,8 +84,10 @@ public class GameCanvasLFImpl {
          *   initial allocation.
          */
         offscreenBuffer = Image.createImage(
-            graphicsAccess.getFullScreenWidth(),
-            graphicsAccess.getFullScreenHeight());
+            //graphicsAccess.getFullScreenWidth(),
+            //graphicsAccess.getFullScreenHeight());
+            graphicsAccess.getScreenWidth(),
+            graphicsAccess.getScreenHeight());
     }
 
     /**
