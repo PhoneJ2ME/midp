@@ -313,11 +313,21 @@ class DisplayableLFImpl implements DisplayableLF {
         if (copyDefferedSizeChange) {
             synchronized (Display.calloutLock) {
                 try {
+                    resetViewport();
                     owner.sizeChanged(viewport[WIDTH], viewport[HEIGHT]);
                 } catch (Throwable t) {
                     Display.handleThrowable(t);
                 }
             }
+             synchronized (Display.LCDUILock) {
+                 if (owner instanceof GameCanvas) {
+                     GameCanvasLFImpl gameCanvasLF =
+                         GameMap.getGameCanvasImpl((GameCanvas)owner);
+                     if (gameCanvasLF != null) {
+                         gameCanvasLF.lCallSizeChanged(viewport[WIDTH], viewport[HEIGHT]);
+                     }
+                 }
+             }
         }
         synchronized (Display.LCDUILock) {
             // Do the internal show preparation
