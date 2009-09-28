@@ -27,6 +27,10 @@
 package com.sun.midp.rms;
 
 import java.io.IOException;
+// #ifdef ENABLE_CDC
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+// #endif
 
 /**
  * A RecordStoreFile is a file abstraction layer between a
@@ -155,11 +159,28 @@ class RecordStoreFile implements AbstractRecordStoreFile {
      *
      * @exception IOException if there is an error opening the file.
      */
-    RecordStoreFile(int suiteId, String name,
-                    int extension) throws IOException {
+    RecordStoreFile(final int suiteId, final String name,
+                    final int extension) throws IOException {
+
+// #ifdef ENABLE_CDC
+        handle =  ((Integer)(AccessController.doPrivileged(new PrivilegedAction() {
+	    public Object run() {
+		int h = -1;
+		try {
+		    h = openRecordStoreFile(
+                       RmsEnvironment.getSecureFilenameBase(suiteId), 
+                       name, extension);
+		} catch (IOException ioex) {
+		    // ignore I/O error on open
+		}
+		return new Integer(h);
+            }
+	    }))).intValue();
+// #else
         handle = openRecordStoreFile(
                      RmsEnvironment.getSecureFilenameBase(suiteId), 
                      name, extension);
+// #endif
     }
 
     /**
