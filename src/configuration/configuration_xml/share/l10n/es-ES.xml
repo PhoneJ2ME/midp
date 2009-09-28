@@ -67,7 +67,8 @@
                   Value="Ir a"/>
 <localized_string Key="STOP"
                   Value="Parar"/>
-<localized_string Key="NUM_SEQUENCE",1234567890,1234567890
+<localized_string Key="NUM_SEQUENCE"
+                  Value="1234567890"/>
 <localized_string Key="EXCEPTION"
                   Value="Excepción"/>
 <localized_string Key="WARNING"
@@ -204,7 +205,6 @@
                   Value="Símbolos"/>
 <localized_string Key="LCDUI_TF_SYMBOLS_TABLE"
                   Value=",'!@#%&amp;*&lt;&gt;_+=:;&quot;?()/\.{}[]~^$&#8364;&#163;-&#165;&#161;&#164;&#167;&#191;`
-",",'!@#%&amp;*&lt;&gt;_+=:;&quot;?()/\.{}[]~^$&#8364;&#163;-&#165;&#161;&#164;&#167;&#191;`
 "/>
 <localized_string Key="LCDUI_TF_KEYBOARD"
                   Value="Qwerty"/>
@@ -214,7 +214,8 @@
                   Value="abc"/>
 <localized_string Key="LCDUI_TF_CAPS_ON"
                   Value="ABC"/>
-<localized_string Key="LCDUI_TF_NUMERIC",123,123
+<localized_string Key="LCDUI_TF_NUMERIC"
+                  Value="123"/>
 <localized_string Key="LCDUI_TF_NUMERIC_KEY_MAP"
                   Value="0$1$2$3$4$5$6$7$8$9$$ "/>
 <localized_string Key="LCDUI_TF_DECIMAL_KEY_MAP"
