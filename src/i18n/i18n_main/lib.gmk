@@ -63,8 +63,6 @@ SUBSYSTEM_I18N_JAVA_FILES = \
     $(I18N_MAIN_DIR)/classes/com/sun/midp/i18n/ResourceBundle.java  \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/l10n/LocalizedStrings.java
 
-OEM_RUNTIME_L10N_DIR=$(I18N_MAIN_DIR)/../../../../midp-brew/src/i18n/i18n_main
-
 ifeq ($(OEM_RUNTIME_L10N_DIR),)
 SUBSYSTEM_I18N_JAVA_FILES += \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/i18n/Resource.java \
