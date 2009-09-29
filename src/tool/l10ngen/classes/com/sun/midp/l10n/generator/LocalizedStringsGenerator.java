@@ -466,7 +466,7 @@ class CSourceWriter {
     {
         this.locale = locale;
         this.strings = new LocalizedString[locale.strings.size()];
-
+        classname = stringToJNI(classname);
         FileOutputStream out = new FileOutputStream(filename);
         writer = new PrintWriter(new OutputStreamWriter(out));
         pl("/* This file is auto-generated. Do not edit! */");
@@ -777,6 +777,41 @@ class CSourceWriter {
         pl("};");
 
         pl("static int max_index = " + strings.length + ";");
+    }
+
+    /**
+     * This method was copied and modified from 
+     * cdc/src/share/javavm/jcc/jcc/Util.java, which adds these characters to
+     * filenames depending on the character found.
+     */
+    private String stringToJNI(String name) { 
+        int length = name.length();
+        String jniName = "";
+
+        for (int i = 0; i < length; i++) { 
+            char ch = name.charAt(i);
+
+            if (ch <= 0x7f && Character.isLetterOrDigit(ch)) {
+                jniName = jniName + ch;
+            } else { 
+                jniName = jniName + '_';
+                switch(ch) { 
+                case '/':  break; // the _ is all we need
+                case '_':  jniName = jniName + '1'; break;
+                case ';':  jniName = jniName + '2'; break;
+                case '[':  jniName = jniName + '3'; break;
+                default: { 
+                    // Adding 0x100000 to a 16-bit number forces 
+                    // toHexString to produce a string of the form "10xxxx".
+                    // Discard the initial "1" to get the right result.
+                    String t = Integer.toHexString(ch + 0x100000);
+                    jniName = jniName + t.substring(1);
+                }
+                }
+            }
+        }
+
+        return jniName;
     }
 }
 

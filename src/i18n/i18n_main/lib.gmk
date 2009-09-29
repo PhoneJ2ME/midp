@@ -60,9 +60,18 @@ SUBSYSTEM_I18N_JAVA_FILES = \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/$(J2ME_CONFIGURATION)/i18n/j2me/UTF_16BE_Writer.java \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/$(J2ME_CONFIGURATION)/i18n/j2me/UTF_16LE_Reader.java \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/$(J2ME_CONFIGURATION)/i18n/j2me/UTF_16LE_Writer.java \
-    $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/i18n/Resource.java \
-    $(I18N_MAIN_DIR)/classes/com/sun/midp/i18n/ResourceBundle.java \
+    $(I18N_MAIN_DIR)/classes/com/sun/midp/i18n/ResourceBundle.java  \
     $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/l10n/LocalizedStrings.java
+
+OEM_RUNTIME_L10N_DIR=$(I18N_MAIN_DIR)/../../../../midp-brew/src/i18n/i18n_main
+
+ifeq ($(OEM_RUNTIME_L10N_DIR),)
+SUBSYSTEM_I18N_JAVA_FILES += \
+    $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/i18n/Resource.java \
+    $(I18N_MAIN_DIR)/reference/classes/com/sun/midp/l10n/LocalizedStrings.java
+else
+    include $(OEM_RUNTIME_L10N_DIR)/lib.gmk
+endif
 
 # Native files for module ( common )
 #
@@ -74,7 +83,8 @@ SUBSYSTEM_I18N_NATIVE_FILES += \
 endif
 
 SUBSYSTEM_I18N_NATIVE_FILES += \
-    LocalizedStringsBase.c
+    LocalizedStringsBase.c \
+    LocalizedStringsBase_es.c
 
 
 SUBSYSTEM_I18N_EXTRA_INCLUDES += \
@@ -94,6 +104,11 @@ $(OBJ_DIR)/LocalizedStringsBase.o: $(L10N_OUTPUT_DIR)/LocalizedStringsBase.c
 		$(LOG_ONLY)
 	@$(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)
 
-
 # To add support for more locales, add a rule
 # here that's similar to $(OBJ_DIR)/LocalizedStringsBase.o
+
+$(OBJ_DIR)/LocalizedStringsBase_es.o: $(L10N_OUTPUT_DIR)/LocalizedStringsBase_es.c
+	@echo " ... $@" $(LOG)
+	@echo +++ $(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` \
+		$(LOG_ONLY)
+	@$(CC) $(CFLAGS) -c $(CC_OUTPUT)$@ `$(call fixcygpath, $<)` $(LOG)

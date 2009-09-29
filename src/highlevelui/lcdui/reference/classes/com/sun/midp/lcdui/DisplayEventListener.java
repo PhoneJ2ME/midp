@@ -34,6 +34,8 @@ import com.sun.midp.events.EventQueue;
 import com.sun.midp.events.EventListener;
 import com.sun.midp.events.NativeEvent;
 
+import com.sun.midp.i18n.Resource;
+
 import com.sun.midp.lcdui.EventConstants;
 import com.sun.midp.lcdui.DisplayContainer;
 import com.sun.midp.lcdui.DisplayDeviceContainer;
@@ -122,6 +124,9 @@ public class DisplayEventListener implements EventListener {
         NativeEvent nativeEvent = (NativeEvent) event;
 
         if (event.getType() == EventTypes.CHANGE_LOCALE_EVENT) {
+            // Send event to Resource to change locale strings.
+            Resource.setResourceBundle(nativeEvent.stringParam1);
+            System.out.println("DisplayEventListener.process called EventType.CHANGE_LOCALE_EVENT found.");
             DisplayEventConsumer[] consumers =
                     displayContainer.getAllDisplayEventConsumers();
             for (int i = 0; i < consumers.length; i++) {
