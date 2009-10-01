@@ -70,28 +70,27 @@ public class TickerLayer extends CLayer {
 
         setAnchor();
         tickerTimer = new Timer();
-    }
+    }    
 
     public void setAnchor() {
-	if (owner == null) {
-	    return;
-	}
+        if (owner == null) {
+            return;
+        }
         bounds[X] = 0;
-	bounds[W] = owner.bounds[W];
-	
-	bounds[H] = TickerSkin.HEIGHT;
+        bounds[W] = owner.bounds[W];
+                
+        bounds[H] = TickerSkin.HEIGHT;
         if (textLoc > bounds[X] + bounds[W]) {
             textLoc = bounds[X] + bounds[W];
         }
         switch (TickerSkin.ALIGN) {
-	case(Graphics.TOP):
-	    bounds[Y] = 0;
-	    break;
-            case(Graphics.BOTTOM):
-	default:
-	    bounds[Y] = owner.bounds[H];
-	    bounds[Y] -= SoftButtonSkin.HEIGHT + bounds[H];
-        }
+        case(Graphics.TOP):
+            bounds[Y] = 0;
+            break;
+        case(Graphics.BOTTOM):
+        default:
+            bounds[Y] = owner.bounds[H] - bounds[H];
+        }        
     }
 
     /**
@@ -185,6 +184,10 @@ public class TickerLayer extends CLayer {
     public void update(CLayer[] layers) {
         super.update(layers);
         setAnchor();
+        if (TickerSkin.ALIGN == Graphics.BOTTOM &&
+            layers[MIDPWindow.BTN_LAYER].isVisible()) {
+            bounds[Y] -= SoftButtonSkin.HEIGHT;                
+        }
     }
 
     /**
