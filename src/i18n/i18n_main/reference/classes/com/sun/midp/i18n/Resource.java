@@ -53,12 +53,11 @@ import com.sun.midp.log.LogChannels;
  * The location of such locale-specific classes is expected to be
  * "com.sun.midp.l10n".  
  */
-abstract public class Resource {
+public abstract class Resource {
     /** Local handle to the current Resource structure. */
     private static ResourceBundle res = null;
 
     static {
-        System.out.println("midp Resource.static called.");
         res = null;
         setResourceBundle();
     }
@@ -75,17 +74,17 @@ abstract public class Resource {
      * @param locale the locale to set.
      */
     public static void setResourceBundle(String locale) {
-        System.out.println("Resource.setResourceBundle called, setting locale to " + locale);
-        if ((locale == null) || (locale.equals("en-US"))) {
+        if ((locale == null) || !locale.startsWith("es")) {
             // the default case
-            //djm res = (ResourceBundle) new sunLocalizedStrings();
-            res = (ResourceBundle) new com.sun.midp.l10n.sunLocalizedStrings();
+            res = (ResourceBundle) new LocalizedStrings();
         } else {
+            res = (ResourceBundle) new LocalizedStrings_es();
+        }
+
+        /*else {
             String cls = "com.sun.midp.l10n.LocalizedStrings";
-            /* 
-             * This only checks for the first '-' in the locale, and
-             * convert to '_' for Class.forName() to work.
-             */
+            //This only checks for the first '-' in the locale, and
+            //convert to '_' for Class.forName() to work.
             int hyphen;
             if ((hyphen = locale.indexOf('-')) != -1) {
                 StringBuffer tmplocale = new StringBuffer(locale);
@@ -95,21 +94,12 @@ abstract public class Resource {
 	    
             while (true) {
                 try {
-                    System.out.println("Resource.setResourceBundle calling Class.forName on: " + c);
                     Class c = Class.forName(cls + "_" + locale);
-                    if (c != null) {
-                        System.out.println("Resource.setResourceBundle c = " + c.getName());
-                        res = (ResourceBundle) c.newInstance();
 
-                        if (res == null) {
-                            System.out.println("Resource.setResourceBundle res = null");
-                        } else {
-                            System.out.println("Resource.setResourceBundle res = " + res);
-                        }
+                    if (c != null) {
+                        res = (ResourceBundle) c.newInstance();
                     }
-                    //} catch (Throwable t) {
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Throwable t) {
                 }
 
                 if (res == null) {
@@ -132,13 +122,11 @@ abstract public class Resource {
             }
 
             // the default case
-            //djm res = (ResourceBundle) new sunLocalizedStrings();
-            res = (ResourceBundle) new com.sun.midp.l10n.LocalizedStrings();
-            System.out.println("Resource.setResourceBundle using the default case...res = " + res);
+            res = (ResourceBundle) new LocalizedStrings();
             // Porting suggestion:
             // System should quit MIDP runtime since resource is 
             // not available. 
-        }
+            }*/
     }
 
     /**
